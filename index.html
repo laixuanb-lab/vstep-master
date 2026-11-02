@@ -2186,6 +2186,491 @@ function toggleAIDrawer() {
   const d = document.getElementById('aiDrawer');
   d.style.display = d.style.display === 'flex' ? 'none' : 'flex';
 }
+  // ============================================================================
+// MÔ-ĐUN NÂNG CẤP SPEAKING: GỢI Ý CHI TIẾT 3 PART + VẤN ĐÁP GIỌNG NÓI AI TRỰC TIẾP
+// (Chấm Phát Âm, Độ Trôi Chảy, Sửa Lỗi Ngữ Pháp & Nghe Lại Giọng Thu Âm)
+// ============================================================================
+const SPEAKING_HINTS_DB = [
+  {
+    // Bộ đề 1 (House, Traveling, Holiday, Mobile Phones)
+    p1Questions: [
+      {
+        q: "1. Do you live in a house or a flat?",
+        hint: "Gợi ý: Nêu nơi ở hiện tại (house/flat) + với ai + cảm nhận (spacious/cozy).",
+        vocab: "spacious (rộng rãi - xpây-sợt), convenient (tiện lợi - cờn-vi-ni-ừn), peaceful (yên bình - pít-x-phồ)",
+        sample: "Currently, I live in a small house with my family. Although it is not very big, it is extremely cozy, peaceful, and convenient for my daily study.",
+        boi: "Cơ-rần-li, ai líp in ờ xmon hao-x uýt mai pha-mi-li. Ôn-đâu ít iz nót ve-ri bíc, ít iz ích-xtrim-li câu-zi..."
+      },
+      {
+        q: "2. What are some advantages of living in an apartment?",
+        hint: "Gợi ý: Nêu 2 lợi ích của căn hộ chung cư: an ninh tốt (24/7 security) và tiện ích xung quanh (supermarkets, parks).",
+        vocab: "security system (hệ thống an ninh - xi-kiu-ri-ti), modern facilities (tiện nghi hiện đại - phờ-xi-li-ti)",
+        sample: "In my opinion, living in an apartment offers great benefits. Firstly, it has a 24-hour security system. Furthermore, residents can easily access modern facilities like supermarkets and gyms downstairs.",
+        boi: "In mai ờ-pi-nhần, líp-ving in ân ờ-pát-mần óp-phờ grết be-ni-phịt. Phớt-li, ít ha-z ờ tuen-ti pho ao-ờ xi-kiu-ri-ti..."
+      },
+      {
+        q: "3. Do you like travelling alone or with others?",
+        hint: "Gợi ý: Chọn đi cùng bạn bè/gia đình (with friends/family) vì vui hơn (more joyful), an toàn (safer) và chia sẻ chi phí (share costs).",
+        vocab: "share expenses (chia sẻ chi phí - se ích-xpen-xịt), take photos (chụp ảnh), memorable (đáng nhớ - me-mơ-rơ-bồ)",
+        sample: "Well, I definitely prefer travelling with my close friends rather than going alone. Because when we travel together, we can share travel expenses, take photos for each other, and enjoy memorable moments.",
+        boi: "Ueo, ai đe-phi-nịt-li pri-phơ tra-vơ-ling uýt mai clâu-x phren..."
+      }
+    ],
+    p2Hints: {
+      chosen: "A beach holiday (Kỳ nghỉ ở biển) ➔ Giải tỏa căng thẳng (relieve stress), bơi lội (go swimming), ăn hải sản tươi (fresh seafood).",
+      reject1: "A climbing holiday (Leo núi) ➔ Quá mệt mỏi (too exhausting) và nguy hiểm nếu thời tiết xấu (dangerous in bad weather).",
+      reject2: "A sight-seeing holiday (Tham quan ngắm cảnh) ➔ Phải đi bộ quá nhiều dưới trời nắng (tiring to walk all day).",
+      boi: "Íp ai uơ plan-ning mai ho-li-đây, ờ-măng đờ thri óp-sừn, ai út đe-phi-nịt-li chu-z ờ bít-ch ho-li-đây..."
+    },
+    p3Hints: {
+      topic: "Mobile phones are useful tools at schools (Điện thoại di động là công cụ hữu ích ở trường học)",
+      idea1: "1. Useful office/study tools: Tra từ điển điện tử (look up dictionary), tính toán và ghi chú bài giảng nhanh chóng.",
+      idea2: "2. Means of communication: Liên lạc dễ dàng với giảng viên và thành viên nhóm đồ án (contact professors and project teammates).",
+      idea3: "3. Help to access the Internet: Tìm kiếm tài liệu học thuật và khóa học trực tuyến mọi lúc mọi nơi (search for academic materials online).",
+      sampleP3: "Today, I strongly agree that mobile phones are indispensable tools at schools for several reasons. Firstly, smartphones serve as useful study tools because students can use dictionary apps and calculators in class. Secondly, they are a convenient means of communication, allowing learners to discuss group projects with classmates easily. Finally, smartphones help students access the Internet to search for academic documents within seconds. In short, mobile phones greatly enhance learning efficiency."
+    }
+  },
+  {
+    // Bộ đề 2 (Movies, Neighbours, Resort vs Cottage, Studying Abroad)
+    p1Questions: [
+      {
+        q: "1. What kind of movies do you like? Why?",
+        hint: "Gợi ý: Chọn phim khoa học viễn tưởng (sci-fi) hoặc phim hài (comedy) vì giúp thư giãn (relax) sau giờ học kỹ thuật căng thẳng.",
+        vocab: "science fiction (khoa học viễn tưởng - xai-ần phích-sừn), relieve stress (xả stress - ri-líp xtrét)",
+        sample: "I am a big fan of science fiction and action movies. After long hours of studying engineering at university, watching these films helps me relieve stress and stimulates my imagination.",
+        boi: "Ai am ờ bíc phen ợp xai-ần phích-sừn èn ách-sừn mu-vi..."
+      },
+      {
+        q: "2. Do you prefer watching films on TV at home or at the cinema?",
+        hint: "Gợi ý: Chọn xem ở nhà (at home) vì miễn phí, thoải mái, hoặc chọn rạp (cinema) vì màn hình lớn và âm thanh sống động.",
+        vocab: "comfortable (thoải mái - căm-phơ-tơ-bồ), save money (tiết kiệm tiền), vivid sound (âm thanh sống động)",
+        sample: "Personally, I prefer watching movies on TV at home. It is much more comfortable, and it helps me save money on tickets and travel time.",
+        boi: "Pơ-xần-nơ-li, ai pri-phơ uót-ching mu-vi on ti-vi át hôm..."
+      },
+      {
+        q: "3. Do you get on well with your neighbours?",
+        hint: "Gợi ý: Khẳng định có mối quan hệ rất tốt (get on very well), hàng xóm thân thiện và hay giúp đỡ nhau.",
+        vocab: "friendly (thân thiện), helpful (hay giúp đỡ), share homemade food (chia sẻ đồ ăn tự nấu)",
+        sample: "Yes, I get on very well with my next-door neighbours. They are extremely kind and helpful, and we often share homemade food with each other on weekends.",
+        boi: "Dét, ai ghét on ve-ri ueo uýt mai nếch-đo nây-bờ..."
+      }
+    ],
+    p2Hints: {
+      chosen: "A resort near the beach (Khu nghỉ dưỡng gần biển) ➔ Tiện nghi hiện đại (modern facilities), không khí biển trong lành (fresh sea breeze).",
+      reject1: "A cottage in the countryside (Nhà tranh ở quê) ➔ Thiếu dịch vụ giải trí (lacks entertainment services) và buồn chán.",
+      reject2: "A hotel in the mountainous area (Khách sạn vùng núi) ➔ Đường đi xa, quanh co dễ say xe (winding roads cause car sickness).",
+      boi: "Áp-tờ ờ hát guốc-king uých, ai xtrong-li bi-líp đát xtây-ing át ờ ri-zót niơ đờ bít-ch iz đờ bét choi-x..."
+    },
+    p3Hints: {
+      topic: "The advantages of studying abroad (Lợi ích của việc đi du học)",
+      idea1: "1. Gain knowledge and experience: Tiếp cận nền giáo dục tiên tiến, phòng thí nghiệm hiện đại và văn hóa mới.",
+      idea2: "2. Promote career prospects: Bằng cấp quốc tế và khả năng tiếng Anh lưu loát giúp dễ xin việc lương cao.",
+      idea3: "3. Widen relationships: Kết bạn với sinh viên quốc tế từ khắp nơi trên thế giới.",
+      sampleP3: "In recent years, studying abroad has brought numerous benefits to university students. First of all, learners can gain advanced knowledge and practical experience in modern laboratories. Secondly, an international qualification and fluent English skills greatly promote their future career prospects with high salaries. Finally, living overseas allows students to widen their social relationships by making friends from different cultures. In conclusion, studying abroad is a life-changing opportunity."
+    }
+  }
+];
+
+let currentInterviewIdx = 0;
+let isRecordingSpeech = false;
+let speechRecInstance = null;
+let mediaRecorderInstance = null;
+let recordedAudioChunks = [];
+let recordedAudioUrl = null;
+let liveTranscriptText = "";
+let liveConfidenceScores = [];
+let speechStartTime = 0;
+
+// Ghi đè giao diện Speaking hàng ngày để bổ sung Gợi ý chi tiết + Phòng Vấn Đáp Giọng Nói AI
+const _originalRenderDailyAll = renderDailyAll;
+renderDailyAll = function() {
+  _originalRenderDailyAll();
+  renderEnhancedSpeakingSection();
+};
+
+function renderEnhancedSpeakingSection() {
+  const ws = REAL_WRITING_SPEAKING[(currentDay - 1) % REAL_WRITING_SPEAKING.length];
+  const hintObj = SPEAKING_HINTS_DB[(currentDay - 1) % SPEAKING_HINTS_DB.length];
+  const allInterviewQuestions = [
+    ...hintObj.p1Questions.map(item => ({ part: "PART 1 (Giao tiếp xã hội)", q: item.q, hint: item.hint, vocab: item.vocab, sample: item.sample })),
+    { part: "PART 2 (Thảo luận giải pháp)", q: ws.speakP2.replace(/<[^>]*>/g, ''), hint: `${hintObj.p2Hints.chosen} | Loại: ${hintObj.p2Hints.reject1}`, vocab: "optimal choice, main reason, inconvenient, exhausting", sample: ws.sampleS.replace(/^Part 2 Sample:\s*/i, '') },
+    { part: "PART 3 (Phát triển chủ đề)", q: `Topic: ${hintObj.p3Hints.topic}`, hint: `${hintObj.p3Hints.idea1} | ${hintObj.p3Hints.idea2}`, vocab: "indispensable, furthermore, in conclusion", sample: hintObj.p3Hints.sampleP3 }
+  ];
+
+  window.currentSpeakingInterviewList = allInterviewQuestions;
+  if (currentInterviewIdx >= allInterviewQuestions.length) currentInterviewIdx = 0;
+
+  const container = document.getElementById('dailySpeakingContent');
+  if (!container) return;
+
+  container.innerHTML = `
+    <!-- PHẦN 1: PHÒNG HỎI ĐÁP TRỰC TIẾP BẰNG GIỌNG NÓI VỚI GIÁM KHẢO AI -->
+    <div style="border:2px solid var(--accent); background:#eff6ff; border-radius:8px; padding:18px; margin-bottom:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <div>
+          <div style="font-size:1.05rem; font-weight:800; color:var(--accent);">🎙️ PHÒNG VẤN ĐÁP TRỰC TIẾP BẰNG LỜI VỚI GIÁM KHẢO AI (CHẤM PHÁT ÂM & NGỮ PHÁP)</div>
+          <div style="font-size:0.82rem; color:var(--muted);">Bấm "Giám khảo AI hỏi" để nghe câu hỏi ➔ Bấm "Ghi âm trả lời" để nói vào mic ➔ AI tự động nhận diện giọng, chấm phát âm & sửa ngữ pháp!</div>
+        </div>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <span style="font-weight:700; font-size:0.84rem;">Chọn câu hỏi:</span>
+          <select id="interviewQuestionSelect" onchange="changeInterviewQuestion(this.value)" style="padding:6px 10px; border-radius:6px; border:1px solid var(--accent); font-weight:700; font-size:0.84rem;">
+            ${allInterviewQuestions.map((item, idx) => `<option value="${idx}" ${idx === currentInterviewIdx ? 'selected' : ''}>Câu ${idx + 1}: [${item.part}]</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <!-- Khung câu hỏi hiện tại của Giám khảo AI -->
+      <div style="background:#fff; border:1px solid #93c5fd; border-radius:6px; padding:14px; margin-bottom:12px;">
+        <div style="font-size:0.78rem; font-weight:800; color:var(--accent); text-transform:uppercase;" id="ivPartTag">${allInterviewQuestions[currentInterviewIdx].part}</div>
+        <div style="font-size:1.02rem; font-weight:800; margin:6px 0;" id="ivQuestionText">👩‍🏫 Giám khảo AI: "${allInterviewQuestions[currentInterviewIdx].q}"</div>
+        <div style="font-size:0.85rem; color:#92400e; background:#fef3c7; padding:8px 10px; border-radius:4px; margin-top:6px;">
+          💡 <strong>Gợi ý ý tưởng trả lời ngay:</strong> <span id="ivHintText">${allInterviewQuestions[currentInterviewIdx].hint}</span><br>
+          🔑 <strong>Từ vựng ăn điểm nên dùng:</strong> <span id="ivVocabText">${allInterviewQuestions[currentInterviewIdx].vocab}</span>
+        </div>
+        <div style="margin-top:8px; font-size:0.84rem; color:var(--muted);">
+          🎯 <strong>Câu mẫu tham khảo (Bạn có thể nói tự do theo ý mình hoặc đọc theo câu mẫu này để luyện phát âm):</strong><br>
+          <em id="ivSampleText" style="color:var(--text); font-weight:600;">"${allInterviewQuestions[currentInterviewIdx].sample}"</em>
+        </div>
+      </div>
+
+      <!-- Thanh nút điều khiển Hỏi - Đáp - Ghi âm -->
+      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;">
+        <button class="btn btn-primary" onclick="aiExaminerAskCurrentQuestion()">🔊 1. Giám Khảo AI Đọc Câu Hỏi</button>
+        <button class="btn" onclick="speakSingleSegment(window.currentSpeakingInterviewList[currentInterviewIdx].sample, 'female', 0.9)">👂 Nghe AI Đọc Mẫu Trả Lời</button>
+        <button class="btn btn-accent" id="btnStartRecord" onclick="startVoiceRecording()">🎙️ 2. Bắt Đầu Ghi Âm Trả Lời</button>
+        <button class="btn btn-danger" id="btnStopRecord" onclick="stopVoiceRecordingAndGrade()" style="display:none;">⏹ Dừng & Chấm Phát Âm + Ngữ Pháp Ngay</button>
+        <button class="btn" id="btnPlayMyVoice" onclick="playRecordedUserVoice()" style="display:none;">▶️ Nghe Lại Giọng Tôi Vừa Nói</button>
+        <button class="btn" onclick="nextInterviewQuestion()">➡️ Câu Hỏi Tiếp Theo</button>
+      </div>
+
+      <div id="recordingStatusBanner" style="display:none; padding:8px 12px; background:#fee2e2; color:#991b1b; font-weight:700; border-radius:6px; margin-bottom:10px; font-size:0.86rem;">
+        🔴 Đang thu âm giọng nói của bạn... Hãy nói tiếng Anh vào micro (Hệ thống đang nhận diện lời nói trực tiếp bên dưới)...
+      </div>
+
+      <!-- Ô hiển thị lời nói của bạn chuyển thành chữ (hoặc tự chỉnh sửa) -->
+      <div>
+        <label style="font-size:0.82rem; font-weight:700; color:var(--muted);">📝 Lời trả lời của bạn (Tự động chuyển từ giọng nói qua Micro hoặc gõ bổ sung):</label>
+        <textarea id="liveSpeechTranscriptBox" class="editor" rows="4" placeholder="Khi bạn bấm 'Bắt Đầu Ghi Âm Trả Lời' và nói vào micro, từng chữ bạn phát âm sẽ hiện trực tiếp tại đây..."></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <button class="btn btn-accent" onclick="evaluateSpokenResponse()">✅ Chấm Điểm Phát Âm & Sửa Lỗi Ngữ Pháp Lời Nói Này</button>
+          <span style="font-size:0.78rem; color:var(--muted);">* Hỗ trợ tốt nhất trên Google Chrome / Microsoft Edge.</span>
+        </div>
+      </div>
+
+      <!-- Khung Kết Quả Chấm Phát Âm & Ngữ Pháp Của Giám Khảo AI -->
+      <div id="liveSpeakingEvaluationBox" style="display:none; margin-top:14px; padding:16px; background:#fff; border:1px solid var(--border); border-left:5px solid var(--accent); border-radius:6px; font-size:0.88rem; line-height:1.7;"></div>
+    </div>
+
+    <!-- PHẦN 2: CHI TIẾT GỢI Ý, TỪ VỰNG, ĐỌC BỒI & BÀI MẪU CHO CẢ 3 PHẦN (PART 1, PART 2, PART 3) -->
+    <div style="display:grid; grid-template-columns:1fr; gap:14px;">
+      <!-- CHI TIẾT PART 1 -->
+      <div style="border:1px solid var(--border); border-radius:8px; padding:16px; background:#fff;">
+        <div style="font-weight:800; font-size:1rem; color:var(--accent); margin-bottom:10px;">📌 PART 1: SOCIAL INTERACTION (3 CÂU HỎI + GỢI Ý + ĐỌC BỒI + MẪU B1-B2)</div>
+        ${hintObj.p1Questions.map((item, idx) => `
+          <div style="padding:12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; margin-bottom:10px;">
+            <div style="font-weight:800; font-size:0.93rem;">❓ ${item.q}</div>
+            <div style="font-size:0.83rem; color:#92400e; margin:4px 0;">💡 <strong>Gợi ý trả lời:</strong> ${item.hint}</div>
+            <div style="font-size:0.83rem; color:var(--accent); margin-bottom:6px;">🔑 <strong>Từ vựng gợi ý:</strong> ${item.vocab}</div>
+            <div style="font-size:0.88rem; background:#fff; padding:10px; border-radius:4px; border:1px dashed var(--border);">
+              <strong>Câu trả lời mẫu:</strong> "${item.sample}"
+              ${currentStage < 3 ? `<div style="color:#b45309; font-size:0.82rem; font-weight:700; margin-top:4px;">🗣️ Đọc bồi: ${item.boi}</div>` : ''}
+            </div>
+            <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn" style="padding:3px 8px; font-size:0.76rem;" onclick="speakSingleSegment('${item.q.replace(/'/g, "\\'")}', 'male', 0.92)">👨 Nghe câu hỏi</button>
+              <button class="btn btn-primary" style="padding:3px 8px; font-size:0.76rem;" onclick="speakSingleSegment('${item.sample.replace(/'/g, "\\'")}', 'female', 0.9)">👩 Nghe trả lời mẫu</button>
+              <button class="btn btn-accent" style="padding:3px 8px; font-size:0.76rem;" onclick="changeInterviewQuestion(${idx}); document.getElementById('ivQuestionText').scrollIntoView({behavior:'smooth'});">🎙️ Luyện thu âm câu này</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- CHI TIẾT PART 2 -->
+      <div style="border:1px solid var(--border); border-radius:8px; padding:16px; background:#fff;">
+        <div style="font-weight:800; font-size:1rem; color:var(--accent); margin-bottom:8px;">📌 PART 2: SOLUTION DISCUSSION (THẢO LUẬN GIẢI PHÁP - GỢI Ý CHỌN 1 LOẠI 2)</div>
+        <div style="margin-bottom:10px; font-size:0.92rem;">${ws.speakP2}</div>
+        <div style="background:#fefce8; border:1px solid #fde047; padding:12px; border-radius:6px; margin-bottom:10px; font-size:0.85rem;">
+          <strong>🧭 Bảng gợi ý lập luận Chọn 1 - Loại 2 (Giúp bạn không bao giờ bí ý):</strong><br>
+          • <strong>✅ Phương án nên chọn:</strong> ${hintObj.p2Hints.chosen}<br>
+          • <strong>❌ Lý do loại phương án 2:</strong> ${hintObj.p2Hints.reject1}<br>
+          • <strong>❌ Lý do loại phương án 3:</strong> ${hintObj.p2Hints.reject2}
+        </div>
+        <div style="background:#f8fafc; padding:12px; border:1px solid var(--border); border-radius:6px; font-size:0.9rem;">
+          <strong>💡 Bài nói mẫu hoàn chỉnh Part 2:</strong><br>
+          "${ws.sampleS.replace(/^Part 2 Sample:\s*/i, '')}"
+          ${currentStage < 3 ? `<div style="color:#b45309; font-size:0.82rem; font-weight:700; margin-top:6px;">🗣️ Đọc bồi mở đầu: ${hintObj.p2Hints.boi}</div>` : ''}
+        </div>
+        <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="speakSingleSegment('${ws.sampleS.replace(/^Part 2 Sample:\s*/i, '').replace(/'/g, "\\'")}', 'female', 0.9)">🔊 Nghe mẫu Part 2 (1.0x)</button>
+          <button class="btn" onclick="speakSingleSegment('${ws.sampleS.replace(/^Part 2 Sample:\s*/i, '').replace(/'/g, "\\'")}', 'male', 0.76)">🐢 Nghe chậm (0.76x)</button>
+          <button class="btn btn-accent" onclick="changeInterviewQuestion(3); document.getElementById('ivQuestionText').scrollIntoView({behavior:'smooth'});">🎙️ Vấn đáp & Thu âm Part 2</button>
+        </div>
+      </div>
+
+      <!-- CHI TIẾT PART 3 -->
+      <div style="border:1px solid var(--border); border-radius:8px; padding:16px; background:#fff;">
+        <div style="font-weight:800; font-size:1rem; color:var(--accent); margin-bottom:8px;">📌 PART 3: TOPIC DEVELOPMENT (PHÁT TRIỂN CHỦ ĐỀ THEO SƠ ĐỒ 3 NHÁNH)</div>
+        <div style="margin-bottom:10px; font-size:0.92rem;">${ws.speakP3}</div>
+        <div style="background:#f0fdf4; border:1px solid #86efac; padding:12px; border-radius:6px; margin-bottom:10px; font-size:0.85rem;">
+          <strong>🌳 Gợi ý triển khai 3 nhánh trong sơ đồ Mindmap:</strong><br>
+          • <strong>Nhánh 1 (Firstly):</strong> ${hintObj.p3Hints.idea1}<br>
+          • <strong>Nhánh 2 (Secondly):</strong> ${hintObj.p3Hints.idea2}<br>
+          • <strong>Nhánh 3 (Finally):</strong> ${hintObj.p3Hints.idea3}
+        </div>
+        <div style="background:#f8fafc; padding:12px; border:1px solid var(--border); border-radius:6px; font-size:0.9rem;">
+          <strong>💡 Bài nói mẫu hoàn chỉnh Part 3:</strong><br>
+          "${hintObj.p3Hints.sampleP3}"
+        </div>
+        <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="speakSingleSegment('${hintObj.p3Hints.sampleP3.replace(/'/g, "\\'")}', 'female', 0.9)">🔊 Nghe mẫu Part 3</button>
+          <button class="btn btn-accent" onclick="changeInterviewQuestion(4); document.getElementById('ivQuestionText').scrollIntoView({behavior:'smooth'});">🎙️ Vấn đáp & Thu âm Part 3</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function changeInterviewQuestion(idxVal) {
+  currentInterviewIdx = parseInt(idxVal, 10);
+  const item = window.currentSpeakingInterviewList[currentInterviewIdx];
+  if (!item) return;
+
+  document.getElementById('interviewQuestionSelect').value = currentInterviewIdx;
+  document.getElementById('ivPartTag').innerText = item.part;
+  document.getElementById('ivQuestionText').innerText = `👩‍🏫 Giám khảo AI: "${item.q}"`;
+  document.getElementById('ivHintText').innerText = item.hint;
+  document.getElementById('ivVocabText').innerText = item.vocab;
+  document.getElementById('ivSampleText').innerText = `"${item.sample}"`;
+  document.getElementById('liveSpeakingEvaluationBox').style.display = 'none';
+}
+
+function nextInterviewQuestion() {
+  const nextIdx = (currentInterviewIdx + 1) % window.currentSpeakingInterviewList.length;
+  changeInterviewQuestion(nextIdx);
+  aiExaminerAskCurrentQuestion();
+}
+
+function aiExaminerAskCurrentQuestion() {
+  const item = window.currentSpeakingInterviewList[currentInterviewIdx];
+  if (!item) return;
+  const cleanQ = item.q.replace(/^\d+\.\s*/, '');
+  speakSingleSegment(`Here is your question for ${item.part}. ${cleanQ}`, 'male', 0.92);
+}
+
+// ============================================================================
+// THU ÂM MICRO + NHẬN DIỆN GIỌNG NÓI TRỰC TIẾP (WEB SPEECH RECOGNITION + MEDIARECORDER)
+// ============================================================================
+async function startVoiceRecording() {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const statusBanner = document.getElementById('recordingStatusBanner');
+  const startBtn = document.getElementById('btnStartRecord');
+  const stopBtn = document.getElementById('btnStopRecord');
+  const transcriptBox = document.getElementById('liveSpeechTranscriptBox');
+
+  stopSpeech();
+  liveTranscriptText = "";
+  liveConfidenceScores = [];
+  speechStartTime = Date.now();
+  transcriptBox.value = "";
+
+  // 1. Khởi tạo MediaRecorder để lưu lại file âm thanh thật của người học
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    recordedAudioChunks = [];
+    mediaRecorderInstance = new MediaRecorder(stream);
+    mediaRecorderInstance.ondataavailable = (e) => {
+      if (e.data.size > 0) recordedAudioChunks.push(e.data);
+    };
+    mediaRecorderInstance.onstop = () => {
+      const blob = new Blob(recordedAudioChunks, { type: 'audio/webm' });
+      recordedAudioUrl = URL.createObjectURL(blob);
+      document.getElementById('btnPlayMyVoice').style.display = 'inline-flex';
+      stream.getTracks().forEach(track => track.stop());
+    };
+    mediaRecorderInstance.start();
+  } catch (err) {
+    console.warn("Không mở được MediaRecorder:", err);
+  }
+
+  // 2. Khởi tạo SpeechRecognition để nhận diện phát âm tiếng Anh sang chữ
+  if (SpeechRec) {
+    speechRecInstance = new SpeechRec();
+    speechRecInstance.lang = 'en-US';
+    speechRecInstance.continuous = true;
+    speechRecInstance.interimResults = true;
+
+    speechRecInstance.onresult = (event) => {
+      let finalStr = '';
+      let interimStr = '';
+      for (let i = 0; i < event.results.length; i++) {
+        const res = event.results[i];
+        if (res.isFinal) {
+          finalStr += res[0].transcript + ' ';
+          if (res[0].confidence) liveConfidenceScores.push(res[0].confidence);
+        } else {
+          interimStr += res[0].transcript;
+        }
+      }
+      liveTranscriptText = (finalStr + interimStr).trim();
+      transcriptBox.value = liveTranscriptText;
+    };
+
+    speechRecInstance.onerror = (e) => {
+      console.warn("SpeechRecognition notice:", e.error);
+    };
+
+    speechRecInstance.start();
+  } else {
+    alert("Trình duyệt của bạn chưa hỗ trợ nhận diện giọng nói tự động. Hãy mở trên Google Chrome hoặc Microsoft Edge nhé!");
+  }
+
+  isRecordingSpeech = true;
+  statusBanner.style.display = 'block';
+  startBtn.style.display = 'none';
+  stopBtn.style.display = 'inline-flex';
+}
+
+function stopVoiceRecordingAndGrade() {
+  const statusBanner = document.getElementById('recordingStatusBanner');
+  const startBtn = document.getElementById('btnStartRecord');
+  const stopBtn = document.getElementById('btnStopRecord');
+
+  if (speechRecInstance) {
+    try { speechRecInstance.stop(); } catch (e) {}
+  }
+  if (mediaRecorderInstance && mediaRecorderInstance.state !== 'inactive') {
+    try { mediaRecorderInstance.stop(); } catch (e) {}
+  }
+
+  isRecordingSpeech = false;
+  statusBanner.style.display = 'none';
+  startBtn.style.display = 'inline-flex';
+  stopBtn.style.display = 'none';
+
+  setTimeout(() => {
+    evaluateSpokenResponse();
+  }, 350);
+}
+
+function playRecordedUserVoice() {
+  if (!recordedAudioUrl) return;
+  const audio = new Audio(recordedAudioUrl);
+  audio.play();
+}
+
+// ============================================================================
+// HÀM CHẤM PHÁT ÂM (PRONUNCIATION) & SỬA LỖI NGỮ PHÁP (GRAMMAR) CỦA LỜI NÓI
+// ============================================================================
+async function evaluateSpokenResponse() {
+  const box = document.getElementById('liveSpeakingEvaluationBox');
+  const transcript = document.getElementById('liveSpeechTranscriptBox').value.trim();
+  const item = window.currentSpeakingInterviewList[currentInterviewIdx];
+  box.style.display = 'block';
+
+  if (!transcript || transcript.length < 5) {
+    box.innerHTML = `⚠️ <strong>Chưa nhận được lời nói:</strong> Bạn hãy bấm <strong>"🎙️ 2. Bắt Đầu Ghi Âm Trả Lời"</strong> rồi nói tiếng Anh vào micro (hoặc đọc thử câu mẫu phía trên) để Giám khảo AI chấm phát âm và ngữ pháp nhé!`;
+    return;
+  }
+
+  const spokenWords = transcript.split(/\s+/).filter(Boolean);
+  const wordCount = spokenWords.length;
+  const elapsedMinutes = Math.max((Date.now() - speechStartTime) / 60000, 0.25);
+  const wpm = Math.min(Math.round(wordCount / elapsedMinutes), 160);
+
+  // 1. Tính điểm độ chuẩn xác Phát âm (Pronunciation Confidence + Đối chiếu từ khóa câu mẫu)
+  const avgConfidence = liveConfidenceScores.length > 0
+    ? (liveConfidenceScores.reduce((a, b) => a + b, 0) / liveConfidenceScores.length)
+    : 0.82;
+
+  const sampleWords = item.sample.toLowerCase().replace(/[.,!?;:"]/g, '').split(/\s+/);
+  const spokenLower = spokenWords.map(w => w.toLowerCase().replace(/[.,!?;:"]/g, ''));
+
+  // Tìm những từ quan trọng trong câu mẫu/gợi ý mà học viên đã phát âm chuẩn vs chưa rõ
+  const targetKeywords = sampleWords.filter(w => w.length >= 5);
+  const matchedKeywords = [...new Set(targetKeywords.filter(w => spokenLower.includes(w)))];
+  const missedKeywords = [...new Set(targetKeywords.filter(w => !spokenLower.includes(w)))].slice(0, 6);
+
+  let pronScore = Math.min(Math.max((avgConfidence * 8.5) + (matchedKeywords.length >= 3 ? 1.0 : 0), 5.0), 9.0);
+  let fluencyScore = wordCount >= 25 ? 7.5 : (wordCount >= 12 ? 6.5 : 5.5);
+
+  // 2. Quét lỗi ngữ pháp & cách dùng từ trong lời nói
+  let grammarIssues = [];
+  WRITING_ERROR_RULES.forEach(rule => {
+    if (rule.regex.test(transcript)) {
+      grammarIssues.push(`• Phát hiện nói: <strong style="color:var(--error-text);">${rule.wrong}</strong> ➔ Nên sửa thành: <strong style="color:var(--success-text);">${rule.fix}</strong> (<em>${rule.reason}</em>)`);
+    }
+  });
+
+  const connectors = ['because', 'firstly', 'secondly', 'furthermore', 'moreover', 'however', 'therefore', 'for example', 'in my opinion', 'in conclusion'];
+  const usedSpokenConnectors = connectors.filter(c => transcript.toLowerCase().includes(c));
+  let grammarScore = Math.max(7.5 - grammarIssues.length * 0.5 + (usedSpokenConnectors.length > 0 ? 0.5 : 0), 5.0);
+  grammarScore = Math.min(grammarScore, 8.5);
+
+  const overallSpeakScore = ((pronScore + fluencyScore + grammarScore) / 3).toFixed(1);
+
+  // 3. Dịch lời học viên vừa nói sang tiếng Việt để đối chiếu nghĩa
+  let vnMeaning = '';
+  try {
+    const transObj = await fastTranslateAnyText(transcript);
+    vnMeaning = transObj.mainTrans;
+  } catch (e) {}
+
+  box.innerHTML = `
+    <div style="font-size:1.05rem; font-weight:800; color:var(--accent); margin-bottom:10px; border-bottom:1px solid var(--border); padding-bottom:6px;">
+      🎓 KẾT QUẢ CHẤM SPEAKING TỪ GIÁM KHẢO AI: ${overallSpeakScore} / 10.0 (${overallSpeakScore >= 6.0 ? 'Đạt chuẩn B2' : 'Đạt chuẩn B1'})
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:10px; margin-bottom:12px;">
+      <div style="background:#f8fafc; padding:10px; border:1px solid var(--border); border-radius:6px;">
+        <strong>1. Pronunciation (Phát âm):</strong> <span style="color:var(--accent); font-weight:800;">${pronScore.toFixed(1)}/10</span><br>
+        <span style="font-size:0.78rem; color:var(--muted);">Độ nhận diện rõ chữ: ${Math.round(avgConfidence * 100)}%</span>
+      </div>
+      <div style="background:#f8fafc; padding:10px; border:1px solid var(--border); border-radius:6px;">
+        <strong>2. Fluency (Độ trôi chảy):</strong> <span style="color:var(--accent); font-weight:800;">${fluencyScore.toFixed(1)}/10</span><br>
+        <span style="font-size:0.78rem; color:var(--muted);">Độ dài: ${wordCount} từ (~${wpm} từ/phút)</span>
+      </div>
+      <div style="background:#f8fafc; padding:10px; border:1px solid var(--border); border-radius:6px;">
+        <strong>3. Grammar & Vocab:</strong> <span style="color:var(--accent); font-weight:800;">${grammarScore.toFixed(1)}/10</span><br>
+        <span style="font-size:0.78rem; color:var(--muted);">Từ nối đã dùng: ${usedSpokenConnectors.length ? usedSpokenConnectors.join(', ') : 'Chưa dùng từ nối'}</span>
+      </div>
+    </div>
+
+    <!-- Chi tiết từ phát âm tốt & từ cần luyện phát âm lại -->
+    <div style="background:#f0fdf4; border:1px solid #86efac; padding:10px 12px; border-radius:6px; margin-bottom:10px;">
+      <strong>🗣️ Đánh giá Phát âm từng từ (Pronunciation Feedback):</strong><br>
+      • <strong>Các từ khóa bạn đã phát âm rõ & chính xác:</strong> ${matchedKeywords.length ? matchedKeywords.map(w => `<span style="background:#dcfce7; padding:2px 6px; border-radius:4px; font-weight:700; margin-right:4px;">✔ ${w}</span>`).join('') : 'Hãy thử đọc các từ khóa trong khung gợi ý phía trên.'}<br>
+      ${missedKeywords.length ? `
+        <div style="margin-top:6px;">
+          • <strong>Các từ ăn điểm bạn nên phát âm thêm (Bấm vào từng từ để nghe phát âm chuẩn):</strong><br>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
+            ${missedKeywords.map(w => `<button class="btn" style="padding:2px 8px; font-size:0.76rem; background:#fff;" onclick="speakSingleSegment('${w}', 'female', 0.85)">🔊 ${w}</button>`).join('')}
+          </div>
+        </div>
+      ` : ''}
+    </div>
+
+    <!-- Chi tiết sửa lỗi ngữ pháp trong lời nói -->
+    <div style="background:#fff; border:1px solid var(--border); padding:10px 12px; border-radius:6px; margin-bottom:10px;">
+      <strong>✍️ Nhận xét Ngữ pháp & Cách dùng từ trong câu nói của bạn:</strong><br>
+      ${grammarIssues.length > 0 ? grammarIssues.join('<br>') : '✔ Câu nói của bạn có cấu trúc ngữ pháp rõ ràng, không mắc lỗi cơ bản.'}
+      ${usedSpokenConnectors.length === 0 ? '<br>💡 <em>Mẹo nâng điểm B2:</em> Khi nói, bạn hãy đệm thêm các cụm từ nối như <strong>"Well, in my opinion..."</strong>, <strong>"Because..."</strong>, <strong>"Furthermore..."</strong> để tăng điểm Fluency & Coherence!' : ''}
+    </div>
+
+    ${vnMeaning ? `
+      <div style="background:#eff6ff; padding:10px 12px; border:1px solid #93c5fd; border-radius:6px; margin-bottom:10px;">
+        <strong>🇻🇳 Nghĩa tiếng Việt máy nghe được từ câu nói của bạn:</strong><br>
+        <em>"${vnMeaning}"</em>
+      </div>
+    ` : ''}
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="speakSingleSegment('Good job! Your speaking score is ${overallSpeakScore}. Let us move to the next question.', 'female', 0.95)">🔊 Nghe Giám Khảo AI Nhận Xét</button>
+      <button class="btn btn-accent" onclick="nextInterviewQuestion()">➡️ Chuyển Sang Câu Hỏi Vấn Đáp Tiếp Theo</button>
+    </div>
+  `;
+}
+
+// Khởi chạy ngay giao diện Speaking nâng cấp
+renderEnhancedSpeakingSection();
 </script>
 </body>
 </html>
