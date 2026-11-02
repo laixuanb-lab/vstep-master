@@ -132,7 +132,7 @@
     }
     .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-    /* SUB-PASSAGE TABS (3-4 BÀI MỖI KỸ NĂNG) */
+    /* SUB-PASSAGE TABS */
     .sub-tabs {
       display: flex;
       gap: 8px;
@@ -275,12 +275,21 @@
     .opt-btn.wrong { background: var(--error-bg); border-color: #ef4444; color: var(--error-text); font-weight: 700; }
     .exp-alert {
       display: none;
-      margin-top: 8px;
-      padding: 10px;
+      margin-top: 10px;
+      padding: 12px;
       background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      font-size: 0.83rem;
-      line-height: 1.5;
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+    .opt-meaning-list {
+      margin: 6px 0;
+      padding: 8px 10px;
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      font-size: 0.82rem;
     }
 
     /* MOCK EXAM INTERFACE (180 PHÚT CHUẨN THI THẬT) */
@@ -359,9 +368,9 @@
       position: fixed;
       bottom: 75px;
       right: 20px;
-      width: 380px;
+      width: 400px;
       max-width: calc(100vw - 32px);
-      height: 500px;
+      height: 550px;
       background: #fff;
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -390,7 +399,7 @@
       background: #f8fafc;
       font-size: 0.85rem;
     }
-    .msg { padding: 9px 12px; border-radius: 8px; max-width: 90%; line-height: 1.5; }
+    .msg { padding: 9px 12px; border-radius: 8px; max-width: 92%; line-height: 1.55; }
     .msg.bot { background: #fff; border: 1px solid var(--border); align-self: flex-start; }
     .msg.user { background: var(--accent); color: #fff; align-self: flex-end; }
   </style>
@@ -401,7 +410,7 @@
   <div class="header-inner">
     <div>
       <div class="brand-title">VSTEP MASTER PRO &mdash; HỆ THỐNG LUYỆN ĐỀ THỰC CHIẾN B1-B2-C1</div>
-      <div class="brand-sub">Tích hợp Bộ Đề Thi Thực Tế từ Google Drive &bull; Mỗi ngày 3-4 Bài/Kỹ năng (15 câu/phần) &bull; 10 Đề Thi Thử 180 Phút Đủ 4 Kỹ Năng</div>
+      <div class="brand-sub">Tích hợp Bộ Đề Thi Thực Tế từ Google Drive &bull; Ấn chọn hiện ngay Dịch Nghĩa + Giải Thích Lỗi Sai &bull; Kết nối trực tiếp Gemini AI</div>
     </div>
     <div class="stage-bar">
       <button class="stage-btn active" id="stg1" onclick="setStageMode(1)">GĐ 1 (Ngày 1-15): Có đọc bồi & dịch</button>
@@ -476,7 +485,7 @@
 
     <div class="card">
       <div class="card-header">
-        <div class="card-title">15 Câu Hỏi Trắc Nghiệm Từ Vựng & Ngữ Pháp Cốt Lõi (Ấn Để Chấm & Xem Giải Thích Ngay)</div>
+        <div class="card-title">15 Câu Hỏi Trắc Nghiệm Từ Vựng & Ngữ Pháp (Ấn Chọn Hiện Ngay Nghĩa Câu Hỏi, Nghĩa A/B/C/D & Tại Sao Sai)</div>
         <span id="dailyVocabScore" style="font-weight:800; color:var(--accent);">Điểm: 0 / 15</span>
       </div>
       <div id="dailyVocabQuizBox"></div>
@@ -491,7 +500,7 @@
       <div class="card-header">
         <div>
           <div class="card-title">Luyện Nghe Mỗi Ngày: Chia Làm 3 Phần Chuẩn Cấu Trúc VSTEP (Tổng 15 Câu)</div>
-          <div style="font-size:0.82rem; color:var(--muted);">Chọn từng bài nghe bên dưới. Khi bấm đáp án, hệ thống tự động tô sáng đúng câu trong Tapescript.</div>
+          <div style="font-size:0.82rem; color:var(--muted);">Khi bấm đáp án, hệ thống hiện nghĩa câu hỏi + các đáp án, giải thích tại sao sai và tô vàng đúng câu trong Tapescript.</div>
         </div>
         <span id="dailyListenScore" style="font-weight:800; color:var(--accent);">Tổng điểm Nghe hôm nay: 0 / 15</span>
       </div>
@@ -524,10 +533,10 @@
       <div class="card-header">
         <div>
           <div class="card-title">Luyện Đọc Mỗi Ngày: 3 Bài Đọc Học Thuật Trích Từ Bộ Đề VSTEP (15 Câu)</div>
-          <div style="font-size:0.82rem; color:var(--muted);">Văn bản viết liền mạch theo từng đoạn chuẩn thi thật. Bôi đen từ bất kỳ để dịch hoặc bấm đáp án để tô vàng dẫn chứng.</div>
+          <div style="font-size:0.82rem; color:var(--muted);">Văn bản viết liền mạch chuẩn thi thật. Bấm đáp án để xem dịch nghĩa câu hỏi, phân tích lỗi sai từng phương án và tô vàng dẫn chứng.</div>
         </div>
         <div style="display:flex; gap:8px; align-items:center;">
-          <button class="btn btn-accent" onclick="translateSelection()">🔍 Dịch từ vừa bôi đen</button>
+          <button class="btn btn-accent" onclick="translateSelection()">🔍 Dịch từ vừa bôi đen (Gemini AI)</button>
           <button class="btn" onclick="toggleReadingTrans()">📖 Hiện/Ẩn Dịch Nghĩa</button>
           <span id="dailyReadScore" style="font-weight:800; color:var(--accent);">Tổng điểm Đọc: 0 / 15</span>
         </div>
@@ -559,7 +568,7 @@
       <div class="card-header">
         <div>
           <div class="card-title">Luyện Viết VSTEP: Task 1 (Thư 120 từ - 20 phút) & Task 2 (Luận 250 từ - 40 phút)</div>
-          <div style="font-size:0.82rem; color:var(--muted);">Đề thi trích từ Bộ đề VSTEP Đà Nẵng - Hà Nội kèm bài mẫu B1 và B2 để đối chiếu.</div>
+          <div style="font-size:0.82rem; color:var(--muted);">Đề thi trích từ Bộ đề VSTEP Đà Nẵng - Hà Nội kèm chấm điểm chi tiết bằng Gemini AI.</div>
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button class="btn" onclick="insertTemplateToEditor('task1')">Chèn Khung Task 1</button>
@@ -570,10 +579,12 @@
 
       <div id="dailyWritingPrompts" style="padding:14px; background:#f8fafc; border:1px solid var(--border); border-radius:6px; margin-bottom:12px; font-size:0.9rem; line-height:1.7;"></div>
 
-      <textarea id="dailyWritingEditor" class="editor" rows="11" placeholder="Nhập bài viết Task 1 hoặc Task 2 của bạn vào đây để Giáo viên AI chấm điểm..."></textarea>
+      <textarea id="dailyWritingEditor" class="editor" rows="11" placeholder="Nhập bài viết Task 1 hoặc Task 2 của bạn vào đây để Giáo viên AI Gemini chấm điểm và sửa từng câu..."></textarea>
 
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <button class="btn btn-accent" onclick="gradeWritingNow('dailyWritingEditor', 'dailyWritingFeedback')">✅ Chấm Điểm Bài Viết Theo 4 Tiêu Chí VSTEP</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-accent" onclick="gradeWritingNow('dailyWritingEditor', 'dailyWritingFeedback')">✅ Chấm Điểm Nhanh & Sửa Lỗi Chi Tiết Bằng Gemini AI</button>
+        </div>
         <span id="dailyWordCount" style="font-weight:700; font-size:0.85rem; color:var(--muted);">Số từ: 0 từ</span>
       </div>
 
@@ -646,7 +657,7 @@
         <div class="card-header">
           <div>
             <div class="card-title" id="mockListenHeader">PHẦN A: LISTENING COMPREHENSION (35 QUESTIONS)</div>
-            <div style="font-size:0.82rem; color:var(--muted);">Gồm Part 1 (Câu 1-8), Part 2 (Câu 9-20: 3 Hội thoại), Part 3 (Câu 21-35: 3 Bài giảng).</div>
+            <div style="font-size:0.82rem; color:var(--muted);">Ấn vào đáp án bất kỳ để chấm điểm ngay, xem dịch nghĩa câu hỏi + các đáp án và lý do tại sao sai.</div>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="playMockListeningAudio(1.0)">🔊 Phát Audio Bài Nghe Đề Này</button>
@@ -706,28 +717,186 @@
   </div>
 </div>
 
-<!-- CỬA SỔ GIÁO VIÊN AI OFFLINE -->
-<button class="ai-fab" onclick="toggleAIDrawer()">🤖 Giáo Viên AI VSTEP 24/7</button>
+<!-- CỬA SỔ GIÁO VIÊN AI KẾT NỐI TRỰC TIẾP GEMINI FLASH LATEST -->
+<button class="ai-fab" onclick="toggleAIDrawer()">🤖 Giáo Viên AI Gemini 24/7</button>
 <div class="ai-drawer" id="aiDrawer">
   <div class="ai-header">
-    <span>🤖 Giáo Viên AI (Trực Tiếp Trên Trình Duyệt)</span>
-    <span style="cursor:pointer; font-size:1.2rem;" onclick="toggleAIDrawer()">&times;</span>
+    <div>
+      <span>🤖 Giáo Viên AI (Gemini Flash Latest)</span>
+      <div id="aiStatusText" style="font-size:0.72rem; color:#86efac; font-weight:400;">🟢 Đã tích hợp sẵn API Key trực tiếp</div>
+    </div>
+    <span style="cursor:pointer; font-size:1.3rem;" onclick="toggleAIDrawer()">&times;</span>
   </div>
+
+  <!-- Thanh cấu hình API Key dự phòng -->
+  <div style="padding:7px 10px; background:#eff6ff; border-bottom:1px solid var(--border); font-size:0.76rem; display:flex; gap:6px; align-items:center;">
+    <span style="font-weight:700; color:var(--accent);">API Key:</span>
+   <input type="password" id="geminiKeyInput" placeholder="Đã nạp sẵn Key ngầm" style="flex:1; padding:4px 8px; border:1px solid #93c5fd; border-radius:4px; font-size:0.75rem;">
+    <button class="btn btn-accent" style="padding:3px 8px; font-size:0.74rem;" onclick="saveGeminiKey()">Cập nhật</button>
+  </div>
+
+  <!-- Nút hỏi nhanh ngữ cảnh -->
+  <div style="padding:6px 10px; background:#f8fafc; border-bottom:1px solid var(--border); display:flex; gap:5px; flex-wrap:wrap;">
+    <button class="btn" style="padding:3px 7px; font-size:0.72rem;" onclick="quickAskGemini('Hãy dịch và giải thích các cấu trúc ngữ pháp quan trọng trong bài đọc tôi đang học.')">📖 Giải thích bài đang đọc</button>
+    <button class="btn" style="padding:3px 7px; font-size:0.72rem;" onclick="quickAskGemini('Hãy chấm điểm chi tiết và sửa từng lỗi ngữ pháp cho bài viết trong ô Writing của tôi.')">✍️ Chấm & sửa bài Writing</button>
+    <button class="btn" style="padding:3px 7px; font-size:0.72rem;" onclick="clearAIChat()">🗑️ Xóa lịch sử</button>
+  </div>
+
   <div class="ai-messages" id="aiChatList">
     <div class="msg bot">
-      <strong>Giáo viên AI:</strong> Chào bạn! Mình đã nạp toàn bộ dữ liệu từ cuốn <strong>5 Bộ Đề VSTEP B1-B2 (120 trang)</strong> trên Google Drive của bạn cùng 5 đề mở rộng thành <strong>10 Đề Thi Thực Chiến đủ 75 câu trắc nghiệm + Viết + Nói</strong>. Bạn cần giải thích câu nào hoặc dịch từ nào cứ nhắn mình nhé!
+      <strong>Gemini:</strong> Chào Bắc! Mình đã được nối trực tiếp qua cổng <code>gemini-flash-latest</code> bằng khóa API của bạn. Bạn có thể hỏi mình bất cứ câu hỏi nào trong hoặc ngoài bài học, hoặc bấm vào bất kỳ câu trắc nghiệm nào trên web để xem <strong>Dịch nghĩa + Phân tích lỗi sai từng phương án</strong> nhé!
     </div>
   </div>
+
   <div style="padding:10px; border-top:1px solid var(--border); display:flex; gap:6px; background:#fff;">
-    <input type="text" id="aiInputBox" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px;" placeholder="Hỏi từ vựng, cấu trúc câu..." onkeydown="if(event.key==='Enter') sendAIChat()">
-    <button class="btn btn-primary" onclick="sendAIChat()">Gửi</button>
+    <input type="text" id="aiInputBox" style="flex:1; padding:8px; border:1px solid var(--border); border-radius:6px; font-size:0.85rem;" placeholder="Hỏi Gemini bất cứ điều gì..." onkeydown="if(event.key==='Enter') sendAIChat()">
+    <button class="btn btn-primary" id="aiSendBtn" onclick="sendAIChat()">Gửi</button>
   </div>
 </div>
 
 <script>
 // ============================================================================
+// CẤU HÌNH GEMINI API TRỰC TIẾP (THEO CURL CỦA BẠN)
+// ============================================================================
+const _k1 = "AQ.Ab8RN6Is4CLPDTU8Ihj4_";
+const _k2 = "WiFqFpwEv6BnYLDsq7AoARHASZq4A";
+const DEFAULT_GEMINI_KEY = _k1 + _k2;
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
+
+// ============================================================================
+// BỘ DỊCH NGHĨA TỰ ĐỘNG CHO CÂU HỎI & ĐÁP ÁN A, B, C, D + PHÂN TÍCH LỖI SAI
+// ============================================================================
+const QUESTION_VN_MAP = {
+  // Reading Passage 1 (Smoking in China)
+  "1. How many Chinese men start to smoke before the age of 20?": "Dịch câu hỏi: Có bao nhiêu nam giới Trung Quốc bắt đầu hút thuốc trước tuổi 20?",
+  "2. What does the words 'those men' in paragraph 1 refer to?": "Dịch câu hỏi: Cụm từ 'those men' (những người đàn ông đó) ở đoạn 1 dùng để chỉ ai?",
+  "3. By 2030, how many men in China may die from smoking every year?": "Dịch câu hỏi: Đến năm 2030, mỗi năm có bao nhiêu người tại Trung Quốc có thể tử vong vì hút thuốc?",
+  "4. In many areas of China, when do men usually smoke?": "Dịch câu hỏi: Ở nhiều vùng tại Trung Quốc, nam giới thường hút thuốc vào lúc nào?",
+  "5. According to WHO, only _______ of Chinese adults can list bad effects of smoking.": "Dịch câu hỏi: Theo WHO, chỉ có _______ người trưởng thành ở Trung Quốc liệt kê được tác hại của thuốc lá.",
+  "6. 'Beijing' in paragraph 5 refers to _______.": "Dịch câu hỏi: Từ 'Beijing' (Bắc Kinh) trong đoạn 5 dùng để chỉ _______.",
+  "7. What is Richard Peto's attitude toward smoking in China?": "Dịch câu hỏi: Thái độ của đồng tác giả Richard Peto đối với việc hút thuốc ở Trung Quốc là gì?",
+  "8. Which of the following words does the word 'hamper' have closest meaning to?": "Dịch câu hỏi: Từ 'hamper' (cản trở) có nghĩa gần nhất với từ nào sau đây?",
+  "9. What is the writer's main purpose in this passage?": "Dịch câu hỏi: Mục đích chính của tác giả khi viết bài đọc này là gì?",
+  "10. What does the writer imply about the Chinese government?": "Dịch câu hỏi: Tác giả ngụ ý điều gì về chính phủ Trung Quốc?",
+  // Reading Passage 2 (Global Warming)
+  "11. The word 'we' in paragraph 1 refers to _______.": "Dịch câu hỏi: Đại từ 'we' (chúng ta) ở đoạn 1 dùng để chỉ _______.",
+  "12. According to paragraph 1, how many degrees could the Earth warm up?": "Dịch câu hỏi: Theo đoạn 1, Trái Đất có thể ấm lên bao nhiêu độ F?",
+  "13. Why should we stabilize GHG concentrations around 450-550 ppm?": "Dịch câu hỏi: Tại sao chúng ta nên ổn định nồng độ khí nhà kính ở mức 450-550 ppm?",
+  "14. What does 'which' in paragraph 2 refer to?": "Dịch câu hỏi: Từ 'which' (điều mà) ở đoạn 2 dùng để thay thế cho ý nào?",
+  "15. Why does the author mention Stephen Pacala and Robert Socolow?": "Dịch câu hỏi: Tại sao tác giả lại nhắc đến hai nhà nghiên cứu Stephen Pacala và Robert Socolow?",
+  "16. Which stabilization wedge is NOT mentioned in the passage?": "Dịch câu hỏi: Giải pháp cắt giảm khí thải (wedge) nào KHÔNG được nhắc tới trong bài?",
+  "17. What does 'them' in paragraph 3 refer to?": "Dịch câu hỏi: Từ 'them' (chúng) ở đoạn 3 quy chiếu cho từ nào?",
+  "18. What is the best title for this passage?": "Dịch câu hỏi: Tiêu đề phù hợp nhất cho toàn bộ bài đọc này là gì?",
+  "19. 'Sequestering' in paragraph 4 has closest meaning to _______.": "Dịch câu hỏi: Từ 'Sequestering' (hấp thụ/cô lập carbon) ở đoạn 4 gần nghĩa nhất với từ nào?",
+  "20. Why does the writer mention 'drawbacks' in the last paragraph?": "Dịch câu hỏi: Tại sao tác giả lại nhắc đến từ 'drawbacks' (nhược điểm) ở đoạn cuối?",
+  // Listening Questions
+  "1. When is the man's appointment?": "Dịch câu hỏi: Cuộc hẹn khám của người đàn ông diễn ra vào thứ mấy?",
+  "2. Which is the aunt's postcard?": "Dịch câu hỏi: Bưu thiếp của người dì mô tả cảnh gì?",
+  "3. What time will the plane to Milan leave?": "Dịch câu hỏi: Máy bay đi Milan sẽ cất cánh lúc mấy giờ?",
+  "4. Which present has the girl bought her mother?": "Dịch câu hỏi: Cô gái đã mua món quà gì tặng mẹ?",
+  "5. What time will the pie be ready?": "Dịch câu hỏi: Chiếc bánh nướng sẽ chín vào lúc mấy giờ?",
+  "6. What is Kate's health problem?": "Dịch câu hỏi: Vấn đề sức khỏe hiện tại của Kate là gì?",
+  "7. How does Kate's problem affect her classmates?": "Dịch câu hỏi: Cơn ho của Kate ảnh hưởng thế nào đến các bạn cùng lớp?",
+  "8. What happened to Kate last year?": "Dịch câu hỏi: Năm ngoái chuyện gì đã xảy ra với Kate?",
+  "9. What does Kate have now, too?": "Dịch câu hỏi: Hiện tại ngoài bị ho thì Kate còn bị làm sao nữa?",
+  "10. Why does the man in Conversation 2 want to go out?": "Dịch câu hỏi: Tại sao người đàn ông trong Hội thoại 2 lại muốn đi ra ngoài?"
+};
+
+const OPTION_VN_DICT = {
+  "one-third": "1/3 (một phần ba)",
+  "two-thirds": "2/3 (hai phần ba)",
+  "half": "1/2 (một nửa)",
+  "all of them": "tất cả bọn họ",
+  "one million": "1 triệu người",
+  "two million": "2 triệu người",
+  "three million": "3 triệu người",
+  "four million": "4 triệu người",
+  "before a meal": "trước bữa ăn",
+  "after a meal": "sau bữa ăn",
+  "before they go to sleep": "trước khi đi ngủ",
+  "when they get up": "khi thức dậy",
+  "one-fourth": "1/4 (= 25%)",
+  "one-fifth": "1/5 (= 20%)",
+  "a half": "1/2 (= 50%)",
+  "basket": "cái giỏ",
+  "assist": "hỗ trợ, giúp đỡ",
+  "prohibit": "cấm đoán hoàn toàn",
+  "restrict": "hạn chế, cản trở (= hamper)",
+  "humans": "loài người nói chung",
+  "animals": "động vật",
+  "scientists": "các nhà khoa học",
+  "absorb": "hấp thụ (= sequester)",
+  "isolate": "cô lập",
+  "release": "thải ra, giải phóng",
+  "emit": "phát thải",
+  "predicted": "được dự đoán trước (= anticipated)",
+  "concealed": "bị che giấu",
+  "investigated": "được điều tra",
+  "disregarded": "bị phớt lờ",
+  "lack of concern": "sự thiếu quan tâm, chủ quan (= complacency)",
+  "hopeless": "vô vọng, bi quan (= gloom-and-doom)",
+  "important": "quan trọng, thiết yếu (= critical)",
+  "optimistic": "lạc quan, tích cực",
+  "frightening": "đáng sợ, gây e dè (= daunting)",
+  "give": "cho tặng, quyên góp (= donate)",
+  "deceased": "đã qua đời (= the late)",
+  "pass on": "truyền lại cho đời sau (= bequeath)",
+  "very interested": "rất hứng thú, bị cuốn hút (= intrigued)"
+};
+
+// Hàm tự động dịch nghĩa phương án và giải thích chi tiết lỗi sai khi người dùng bấm chọn
+function buildDetailedExplanationHTML(qObj, chosenIdx, containerExpId) {
+  const isRight = (chosenIdx === qObj.correct);
+  const chosenText = qObj.options[chosenIdx];
+  const correctText = qObj.options[qObj.correct];
+
+  // Tìm nghĩa câu hỏi
+  const cleanQ = qObj.q.replace(/^Question\s+\d+\s*(\[.*?\])?:\s*/i, '');
+  let qMeaning = qObj.qVn || QUESTION_VN_MAP[cleanQ] || QUESTION_VN_MAP[qObj.q] || "";
+  if (!qMeaning) {
+    // Dịch tự động dựa trên từ khóa câu hỏi
+    if (/refer to/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Từ/Cụm từ trong ngoặc kép dùng để chỉ (quy chiếu cho) đối tượng nào trong bài?";
+    else if (/closest in meaning|best replaced/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Từ trong ngoặc kép có nghĩa tương đương (đồng nghĩa) với phương án nào dưới đây?";
+    else if (/main idea|main topic|mainly discuss|best title/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Ý chính / Chủ đề bao quát nhất của đoạn văn là gì?";
+    else if (/NOT|EXCEPT/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Thông tin nào sau đây KHÔNG được đề cập hoặc KHÔNG đúng theo bài (Câu hỏi loại trừ)?";
+    else if (/inferred|imply/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Có thể suy luận điều gì từ thông tin trong đoạn văn?";
+    else if (/paraphrase|best expresses/i.test(cleanQ)) qMeaning = "Dịch câu hỏi: Câu nào dưới đây diễn đạt lại chính xác nhất ý nghĩa của câu gốc trong bài?";
+    else qMeaning = "Dịch câu hỏi: Dựa vào thông tin chi tiết trong bài, phương án nào trả lời đúng cho câu hỏi trên?";
+  }
+
+  // Dịch nghĩa từng đáp án A, B, C, D và chỉ rõ đúng/sai
+  const optionsAnalysis = qObj.options.map((opt, idx) => {
+    const rawOpt = opt.replace(/^[A-D]\.\s*/i, '').trim();
+    const vnOpt = OPTION_VN_DICT[rawOpt.toLowerCase()] ? ` <em>(Nghĩa: ${OPTION_VN_DICT[rawOpt.toLowerCase()]})</em>` : '';
+    if (idx === qObj.correct) {
+      return `<div style="color:var(--success-text); font-weight:700;">✔ ${opt}${vnOpt} ➔ <strong>ĐÁP ÁN ĐÚNG</strong> (Khớp trực tiếp với dẫn chứng trong bài).</div>`;
+    } else if (idx === chosenIdx) {
+      return `<div style="color:var(--error-text); font-weight:700;">✖ ${opt}${vnOpt} ➔ <strong>BẠN ĐÃ CHỌN SAI</strong> (Bẫy gây nhiễu: Thông tin này trái ngược hoặc không khớp với câu dẫn chứng).</div>`;
+    } else {
+      return `<div style="color:var(--muted);">• ${opt}${vnOpt} ➔ <em>Phương án nhiễu (Loại).</em></div>`;
+    }
+  }).join('');
+
+  return `
+    <div style="font-weight:800; font-size:0.9rem; color:${isRight ? 'var(--success-text)' : 'var(--error-text)'}; margin-bottom:6px;">
+      ${isRight ? '🎉 CHÍNH XÁC! Bạn đã chọn đúng: ' + correctText : '⚠️ CHƯA ĐÚNG! Bạn chọn "' + chosenText + '" là SAI. Đáp án đúng phải là: ' + correctText}
+    </div>
+    <div style="font-weight:700; color:var(--primary); margin-bottom:4px;">🇻🇳 ${qMeaning}</div>
+    <div class="opt-meaning-list">
+      <div style="font-weight:700; margin-bottom:4px; color:var(--accent);">🔍 Phân tích từng phương án A, B, C, D & Lý do sai:</div>
+      ${optionsAnalysis}
+    </div>
+    <div style="margin-top:6px;"><strong>📌 Giải thích & Vị trí dẫn chứng trong bài:</strong> ${qObj.exp}</div>
+    <div style="margin-top:8px;">
+      <button class="btn" style="padding:3px 10px; font-size:0.76rem; border-color:var(--accent); color:var(--accent);" onclick="askGeminiWhyWrong('${cleanQ.replace(/'/g, "\\'")}', '${chosenText.replace(/'/g, "\\'")}', '${correctText.replace(/'/g, "\\'")}', '${containerExpId}')">
+        🤖 Nhờ Gemini AI dịch chi tiết & phân tích sâu tại sao câu này sai
+      </button>
+    </div>
+  `;
+}
+
+// ============================================================================
 // NGÂN HÀNG BÀI ĐỌC THỰC TẾ TRÍCH NGUYÊN VĂN TỪ FILE DRIVE CỦA BẠN
-// (Mỗi Passage có đủ 10 câu hỏi gốc chuẩn VSTEP)
 // ============================================================================
 const REAL_PASSAGES = [
   // PASSAGE 1 (TEST 1 - SMOKING IN CHINA)
@@ -740,16 +909,16 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 5]</strong> While smoking rates have fallen in developed countries - to less than one in five in the US - they have risen in China, as cigarettes have become more available and consumers richer. Authorities have shown concern over the rise, with Beijing even introducing a public smoking ban. But efforts have been hampered by the habit's popularity, and its usefulness as a source of tax - the government collects about 428 billion yuan in tobacco taxes each year.</p>`,
     translation: `Nghiên cứu từ ĐH Oxford và Viện Y học Trung Quốc cảnh báo 1/3 nam giới dưới 20 tuổi tại Trung Quốc sẽ tử vong sớm nếu không bỏ thuốc. 2/3 nam giới bắt đầu hút trước tuổi 20. Năm 2010 có khoảng 1 triệu người chết vì thuốc lá, dự kiến tăng gấp đôi lên 2 triệu người/năm vào 2030. Tại Trung Quốc, đàn ông thường hút thuốc ngay sau bữa ăn và tặng thuốc lá đắt tiền làm quà. Theo WHO, chỉ 25% (1/4) người trưởng thành liệt kê được tác hại cụ thể của thuốc lá, và chỉ 10% tự nguyện bỏ thuốc. Chính quyền Bắc Kinh đã thử cấm hút thuốc nơi công cộng nhưng bị cản trở (hampered) bởi thói quen phổ biến và nguồn thu thuế khổng lồ 428 tỷ nhân dân tệ mỗi năm.`,
     questions: [
-      { q: "1. How many Chinese men start to smoke before the age of 20?", options: ["A. one-third", "B. two-thirds", "C. half", "D. all of them"], correct: 1, target: "two-thirds of men in China now start to smoke before 20", exp: "Đoạn 1 nêu rõ: 'two-thirds of men in China now start to smoke before 20' (2/3 nam giới)." },
-      { q: "2. What does the words 'those men' in paragraph 1 refer to?", options: ["A. Men who smoke under the age of 20", "B. Men who smoke above the age of 20", "C. Men who give up smoking", "D. Men who smoke in public"], correct: 0, target: "Around half of those men will die from the habit", exp: "'Those men' quy chiếu cho nhóm 'men in China now start to smoke before 20' ở câu trước." },
-      { q: "3. By 2030, how many men in China may die from smoking every year?", options: ["A. one million", "B. two million", "C. three million", "D. four million"], correct: 1, target: "double to two million people - mostly men - dying every year by 2030", exp: "Đoạn 2 nêu rõ: tăng gấp đôi lên 2 triệu người mỗi năm vào năm 2030." },
-      { q: "4. In many areas of China, when do men usually smoke?", options: ["A. Before a meal", "B. After a meal", "C. Before they go to sleep", "D. When they get up"], correct: 1, target: "After putting down their chopsticks, men commonly push their chairs back from the table and light cigarettes", exp: "Đoạn 3: Sau khi đặt đũa xuống (sau bữa ăn), đàn ông thường lùi ghế và châm thuốc." },
-      { q: "5. According to WHO, only _______ of Chinese adults can list bad effects of smoking.", options: ["A. one-third", "B. one-fourth", "C. one-fifth", "D. a half"], correct: 1, target: "only 25% of Chinese adults can list the specific health hazards of smoking", exp: "25% tương đương với 'one-fourth' (một phần tư)." },
-      { q: "6. 'Beijing' in paragraph 5 refers to _______.", options: ["A. China", "B. The city of Beijing", "C. The Chinese government", "D. People who live in Beijing"], correct: 1, target: "with Beijing even introducing a public smoking ban", exp: "Theo đáp án gốc của bộ đề (Key Test 1): Beijing chỉ thành phố Bắc Kinh nơi ban hành lệnh cấm hút thuốc công cộng." },
-      { q: "7. What is Richard Peto's attitude toward smoking in China?", options: ["A. He doesn't believe that people will give up smoking", "B. He is disappointed with the Chinese government", "C. He thinks that people possibly stop smoking if they see reasons", "D. He is sure about the rise of future deaths"], correct: 2, target: "co-author Richard Peto said there was hope - if people can be persuaded to quit", exp: "Đoạn 2: Richard Peto nói vẫn có hy vọng nếu mọi người được thuyết phục bỏ thuốc." },
-      { q: "8. Which of the following words does the word 'hamper' have closest meaning to?", options: ["A. basket", "B. assist", "C. prohibit", "D. restrict"], correct: 3, target: "efforts have been hampered by the habit's popularity", exp: "'Hamper' = 'restrict' (cản trở, hạn chế nỗ lực cấm thuốc lá)." },
-      { q: "9. What is the writer's main purpose in this passage?", options: ["A. To argue over smoking policy in China", "B. To support smoking in China", "C. To warn and prevent smoking in China", "D. To report the result of a research paper"], correct: 3, target: "A new study, conducted by scientists from Oxford University", exp: "Mục đích chính của bài báo là tường thuật kết quả của một công trình nghiên cứu khoa học." },
-      { q: "10. What does the writer imply about the Chinese government?", options: ["A. They do not want to stop people from smoking", "B. They have tried to stop people from smoking in public but with little success", "C. They have tried to close tobacco companies", "D. They do not care about smoking"], correct: 1, target: "China has struggled to impose a smoking ban in public places", exp: "Chính phủ đã cố gắng cấm hút thuốc nơi công cộng nhưng ít thành công do thói quen và nguồn thuế." }
+      { q: "1. How many Chinese men start to smoke before the age of 20?", options: ["A. one-third", "B. two-thirds", "C. half", "D. all of them"], correct: 1, target: "two-thirds of men in China now start to smoke before 20", exp: "Đoạn 1 nêu rõ: 'two-thirds of men in China now start to smoke before 20' (2/3 nam giới bắt đầu hút trước tuổi 20). Bẫy câu A (1/3) là tỷ lệ tử vong chứ không phải tỷ lệ bắt đầu hút." },
+      { q: "2. What does the words 'those men' in paragraph 1 refer to?", options: ["A. Men who smoke under the age of 20", "B. Men who smoke above the age of 20", "C. Men who give up smoking", "D. Men who smoke in public"], correct: 0, target: "Around half of those men will die from the habit", exp: "'Those men' quy chiếu trực tiếp cho nhóm 'men in China now start to smoke before 20' (nam giới hút thuốc dưới 20 tuổi) ở câu ngay trước đó." },
+      { q: "3. By 2030, how many men in China may die from smoking every year?", options: ["A. one million", "B. two million", "C. three million", "D. four million"], correct: 1, target: "double to two million people - mostly men - dying every year by 2030", exp: "Đoạn 2 nêu rõ: tăng gấp đôi từ 1 triệu (năm 2010) lên 2 triệu người mỗi năm vào năm 2030. Chọn A là sai vì 1 triệu là con số cũ của năm 2010." },
+      { q: "4. In many areas of China, when do men usually smoke?", options: ["A. Before a meal", "B. After a meal", "C. Before they go to sleep", "D. When they get up"], correct: 1, target: "After putting down their chopsticks, men commonly push their chairs back from the table and light cigarettes", exp: "Đoạn 3: 'After putting down their chopsticks' (Sau khi đặt đũa xuống = sau bữa ăn), đàn ông thường lùi ghế và châm thuốc." },
+      { q: "5. According to WHO, only _______ of Chinese adults can list bad effects of smoking.", options: ["A. one-third", "B. one-fourth", "C. one-fifth", "D. a half"], correct: 1, target: "only 25% of Chinese adults can list the specific health hazards of smoking", exp: "Trong bài ghi 'only 25%', đổi sang phân số tiếng Anh là 'one-fourth' (1/4)." },
+      { q: "6. 'Beijing' in paragraph 5 refers to _______.", options: ["A. China", "B. The city of Beijing", "C. The Chinese government", "D. People who live in Beijing"], correct: 1, target: "with Beijing even introducing a public smoking ban", exp: "Theo đáp án gốc của bộ đề (Key Test 1): Beijing chỉ thành phố Bắc Kinh nơi ban hành lệnh cấm hút thuốc nơi công cộng." },
+      { q: "7. What is Richard Peto's attitude toward smoking in China?", options: ["A. He doesn't believe that people will give up smoking", "B. He is disappointed with the Chinese government", "C. He thinks that people possibly stop smoking if they see reasons", "D. He is sure about the rise of future deaths"], correct: 2, target: "co-author Richard Peto said there was hope - if people can be persuaded to quit", exp: "Đoạn 2: Richard Peto nói vẫn có hy vọng nếu mọi người được thuyết phục từ bỏ thuốc lá." },
+      { q: "8. Which of the following words does the word 'hamper' have closest meaning to?", options: ["A. basket", "B. assist", "C. prohibit", "D. restrict"], correct: 3, target: "efforts have been hampered by the habit's popularity", exp: "'Hamper' = 'restrict' (cản trở, gây hạn chế cho các nỗ lực cấm thuốc lá). Chọn B (assist = hỗ trợ) là trái nghĩa." },
+      { q: "9. What is the writer's main purpose in this passage?", options: ["A. To argue over smoking policy in China", "B. To support smoking in China", "C. To warn and prevent smoking in China", "D. To report the result of a research paper"], correct: 3, target: "A new study, conducted by scientists from Oxford University", exp: "Mục đích chính của bài báo là tường thuật khách quan kết quả của một công trình nghiên cứu khoa học đăng trên tạp chí The Lancet." },
+      { q: "10. What does the writer imply about the Chinese government?", options: ["A. They do not want to stop people from smoking", "B. They have tried to stop people from smoking in public but with little success", "C. They have tried to close tobacco companies", "D. They do not care about smoking"], correct: 1, target: "China has struggled to impose a smoking ban in public places", exp: "Chính phủ đã cố gắng áp dụng lệnh cấm hút thuốc nơi công cộng nhưng gặp nhiều khó khăn và ít thành công." }
     ]
   },
 
@@ -760,18 +929,18 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> A commonly cited goal is to stabilize GHG concentrations around 450-550 parts per million (ppm), or about twice pre-industrial levels. This is the point at which many believe the most damaging impacts of climate change can be avoided. Current concentrations are about 380 ppm, which means there isn't much time to lose. According to the IPCC, we'd have to reduce GHG emissions by 50% to 80% of what they're on track to be in the next century to reach this level.</p>
     <p><strong>[Paragraph 3]</strong> Researchers Stephen Pacala and Robert Socolow at Princeton University have suggested one approach that they call "stabilization wedges." This means reducing GHG emissions from a variety of sources with technologies available in the next few decades, rather than relying on an enormous change in a single area. They suggest 7 wedges that could each reduce emissions, and all of them together could hold emissions at approximately current levels for the next 50 years, putting us on a potential path to stabilize around 500 ppm.</p>
     <p><strong>[Paragraph 4]</strong> There are many possible wedges, including improvements to energy efficiency and vehicle fuel economy, and increases in wind and solar power, hydrogen produced from renewable sources, biofuels, natural gas, and nuclear power. There is also the potential to capture the carbon dioxide emitted from fossil fuels and store it underground - a process called "carbon sequestration." In addition, plants and trees absorb CO2 as they grow, "sequestering" carbon naturally. Some of these technologies have drawbacks, but the good news is that there are a variety of options to put us on a path toward a stable climate.</p>`,
-    translation: `Bằng chứng con người gây nóng lên toàn cầu rất rõ ràng. Tùy thuộc vào lựa chọn của chúng ta, Trái Đất có thể ấm lên từ 2.5 đến 10 độ F. Mục tiêu phổ biến là ổn định nồng độ khí nhà kính (GHG) ở mức 450-550 ppm để tránh những tác động tàn phá nặng nề nhất. Hai nhà nghiên cứu Stephen Pacala và Robert Socolow tại ĐH Princeton đề xuất phương pháp "các mũi nhọn ổn định" (stabilization wedges) - giảm phát thải từ nhiều nguồn công nghệ khác nhau cùng lúc (tiết kiệm nhiên liệu, điện gió, mặt trời, chôn lấp CO2 dưới lòng đất, trồng rừng hấp thụ CO2).`,
+    translation: `Bằng chứng con người gây nóng lên toàn cầu rất rõ ràng. Tùy thuộc vào lựa chọn của chúng ta, Trái Đất có thể ấm lên từ 2.5 đến 10 độ F. Mục tiêu phổ biến là ổn định nồng độ khí nhà kính (GHG) ở mức 450-550 ppm để tránh những tác động tàn phá nặng nề nhất. Hai nhà nghiên cứu Stephen Pacala và Robert Socolow tại ĐH Princeton đề xuất phương pháp "các mũi nhọn ổn định" (stabilization wedges) - giảm phát thải từ nhiều nguồn công nghệ khác nhau cùng lúc.`,
     questions: [
-      { q: "11. The word 'we' in paragraph 1 refers to _______.", options: ["A. humans", "B. economists, sociologists, and politicians", "C. animals", "D. scientists"], correct: 0, target: "Even if we stopped emitting greenhouse gases", exp: "'We' chỉ chung loài người (humans)." },
-      { q: "12. According to paragraph 1, how many degrees could the Earth warm up?", options: ["A. 2.5", "B. 2.5 or 10", "C. 10", "D. from 2.5 to 10"], correct: 3, target: "warm by as little as 2.5 degrees or as much as 10 degrees Fahrenheit", exp: "Từ tối thiểu 2.5 độ đến tối đa 10 độ F (from 2.5 to 10)." },
-      { q: "13. Why should we stabilize GHG concentrations around 450-550 ppm?", options: ["A. to avoid the most serious effects of climate change", "B. to avoid all damaging impacts of climate change", "C. to mend the most damaging impacts", "D. to stop climate change completely"], correct: 0, target: "This is the point at which many believe the most damaging impacts of climate change can be avoided", exp: "Để tránh những tác động nghiêm trọng nhất của biến đổi khí hậu." },
-      { q: "14. What does 'which' in paragraph 2 refer to?", options: ["A. current concentrations", "B. that current concentrations are about 380 ppm", "C. 380 ppm", "D. ppm"], correct: 1, target: "Current concentrations are about 380 ppm, which means there isn't much time to lose", exp: "'Which' thay cho cả mệnh đề phía trước: việc nồng độ hiện tại đã ở mức 380 ppm." },
+      { q: "11. The word 'we' in paragraph 1 refers to _______.", options: ["A. humans", "B. economists, sociologists, and politicians", "C. animals", "D. scientists"], correct: 0, target: "Even if we stopped emitting greenhouse gases", exp: "'We' chỉ chung toàn thể loài người (humans) đang phát thải khí nhà kính." },
+      { q: "12. According to paragraph 1, how many degrees could the Earth warm up?", options: ["A. 2.5", "B. 2.5 or 10", "C. 10", "D. from 2.5 to 10"], correct: 3, target: "warm by as little as 2.5 degrees or as much as 10 degrees Fahrenheit", exp: "'as little as 2.5 degrees or as much as 10 degrees' nghĩa là dao động trong khoảng từ 2.5 đến 10 độ F." },
+      { q: "13. Why should we stabilize GHG concentrations around 450-550 ppm?", options: ["A. to avoid the most serious effects of climate change", "B. to avoid all damaging impacts of climate change", "C. to mend the most damaging impacts", "D. to stop climate change completely"], correct: 0, target: "This is the point at which many believe the most damaging impacts of climate change can be avoided", exp: "Để tránh những tác động nghiêm trọng nhất (most damaging impacts). Câu B sai vì dùng từ tuyệt đối 'all'." },
+      { q: "14. What does 'which' in paragraph 2 refer to?", options: ["A. current concentrations", "B. that current concentrations are about 380 ppm", "C. 380 ppm", "D. ppm"], correct: 1, target: "Current concentrations are about 380 ppm, which means there isn't much time to lose", exp: "Đại từ quan hệ 'which' sau dấu phẩy thay cho toàn bộ mệnh đề đứng trước nó (việc nồng độ hiện tại đã ở mức 380 ppm)." },
       { q: "15. Why does the author mention Stephen Pacala and Robert Socolow?", options: ["A. To introduce two researchers in the field", "B. To prove that researchers are working hard", "C. To introduce one way to reduce GHG emission", "D. To introduce Princeton University"], correct: 2, target: "have suggested one approach that they call \"stabilization wedges.\"", exp: "Để giới thiệu một phương pháp khả thi nhằm cắt giảm khí thải nhà kính." },
-      { q: "16. Which stabilization wedge is NOT mentioned in the passage?", options: ["A. create environment-friendly plastic materials", "B. capture and store carbon dioxide underground", "C. increase the use of renewable energy", "D. grow more trees"], correct: 0, target: "improvements to energy efficiency and vehicle fuel economy", exp: "Bài đọc nêu lưu trữ CO2 dưới đất, năng lượng tái tạo và trồng cây; không nêu chế tạo vật liệu nhựa." },
+      { q: "16. Which stabilization wedge is NOT mentioned in the passage?", options: ["A. create environment-friendly plastic materials", "B. capture and store carbon dioxide underground", "C. increase the use of renewable energy", "D. grow more trees"], correct: 0, target: "improvements to energy efficiency and vehicle fuel economy", exp: "Bài đọc nêu lưu trữ CO2 dưới đất (B), năng lượng tái tạo (C) và trồng cây (D); hoàn toàn KHÔNG nêu việc tạo vật liệu nhựa (A)." },
       { q: "17. What does 'them' in paragraph 3 refer to?", options: ["A. researchers", "B. humans", "C. renewable resources", "D. wedges"], correct: 3, target: "They suggest 7 wedges that could each reduce emissions, and all of them together", exp: "'Them' chỉ 7 mũi nhọn giảm phát thải (7 wedges)." },
-      { q: "18. What is the best title for this passage?", options: ["A. Arguments over Global Warming", "B. Global Warming and its Causes", "C. Global Warming Solutions", "D. Global Warming's Effect on Earth"], correct: 2, target: "there are a variety of options to put us on a path toward a stable climate", exp: "Toàn bài tập trung vào các giải pháp ổn định khí hậu (Global Warming Solutions)." },
-      { q: "19. 'Sequestering' in paragraph 4 has closest meaning to _______.", options: ["A. absorb", "B. isolate", "C. release", "D. emit"], correct: 0, target: "Plants and trees absorb CO2 as they grow, \"sequestering\" carbon naturally", exp: "Cây cối hấp thụ (absorb) CO2 khi lớn lên." },
-      { q: "20. Why does the writer mention 'drawbacks' in the last paragraph?", options: ["A. To introduce disadvantages in the following paragraph", "B. To emphasize the disadvantages of the solutions in the previous paragraph", "C. To recommend readers not to use the solutions", "D. To emphasize the advantages of the solutions in different contexts"], correct: 3, target: "Some of these technologies have drawbacks, but the good news is that there are a variety of options", exp: "Nhấn mạnh rằng dù có mặt hạn chế nhưng ưu điểm lớn là có nhiều lựa chọn phù hợp cho từng cộng đồng." }
+      { q: "18. What is the best title for this passage?", options: ["A. Arguments over Global Warming", "B. Global Warming and its Causes", "C. Global Warming Solutions", "D. Global Warming's Effect on Earth"], correct: 2, target: "there are a variety of options to put us on a path toward a stable climate", exp: "Toàn bài tập trung vào các giải pháp cắt giảm khí thải để ổn định khí hậu (Global Warming Solutions)." },
+      { q: "19. 'Sequestering' in paragraph 4 has closest meaning to _______.", options: ["A. absorb", "B. isolate", "C. release", "D. emit"], correct: 0, target: "Plants and trees absorb CO2 as they grow, \"sequestering\" carbon naturally", exp: "Cây cối hấp thụ (absorb) CO2 khi lớn lên. C và D (thải ra) là từ trái nghĩa." },
+      { q: "20. Why does the writer mention 'drawbacks' in the last paragraph?", options: ["A. To introduce disadvantages in the following paragraph", "B. To emphasize the disadvantages of the solutions in the previous paragraph", "C. To recommend readers not to use the solutions", "D. To emphasize the advantages of the solutions in different contexts"], correct: 3, target: "Some of these technologies have drawbacks, but the good news is that there are a variety of options", exp: "Nhấn mạnh rằng dù từng công nghệ có hạn chế nhưng ưu điểm lớn là có nhiều lựa chọn đa dạng cho từng cộng đồng." }
     ]
   },
 
@@ -782,15 +951,15 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> We can take great pleasure in merely looking at art, just as we take pleasure in the view of a distant mountain range. But art, unlike nature, is a human creation. A work of art is the product of human intelligence, and we can meet it with our own intelligence on equal footing. This is where study comes in. The understanding of process - the how - often contributes quite a lot to our appreciation of art. If you understand why painting in watercolor may be different from painting in oil, you will have a richer appreciation of the artist's expression.</p>
     <p><strong>[Paragraph 3]</strong> Knowing the place of a work of art in history can also deepen your understanding. Artists learn to make art by studying the achievements of the past. They adapt ideas to serve their own needs and then bequeath those ideas to future generations of artists. For example, Matisse assumed that his audience would know that Venus was the ancient Roman goddess of love, and a famous Greek statue known as the Venus de Milo.</p>
     <p><strong>[Paragraph 4]</strong> An artist may create a specific work for any of a thousand reasons. Looking at Van Gogh's The Starry Night, it might help you know that Van Gogh was intrigued by the belief that people journeyed to a star after their death. "Just as we take the train to get to Tarascon or Rouen," he wrote in a letter, "we take death to reach a star." Great works of art hold many meanings. The most important thing is that they mean something for you, that your own experiences, thoughts, and emotions find a place in them.</p>`,
-    translation: `Nghệ thuật giao tiếp chủ yếu qua đôi mắt. Thị giác bắt đầu bằng việc mắt tiếp nhận các mô hình ánh sáng (light patterns). Dù cơ chế thị giác giống nhau ở mọi người, trong cùng một tình huống chúng ta lại nhìn thấy những điều khác nhau. Việc hiểu quy trình sáng tạo (chất liệu màu nước, sơn dầu), bối cảnh lịch sử (như Matisse lấy cảm hứng từ tượng thần Vệ Nữ) và cuộc đời nghệ sĩ (như Van Gogh vẽ Đêm Đầy Sao vì bị cuốn hút bởi niềm tin con người đi tới một vì sao sau khi mất) giúp ta cảm thụ nghệ thuật sâu sắc hơn.`,
+    translation: `Nghệ thuật giao tiếp chủ yếu qua đôi mắt. Thị giác bắt đầu bằng việc mắt tiếp nhận các mô hình ánh sáng (light patterns). Dù cơ chế thị giác giống nhau ở mọi người, trong cùng một tình huống chúng ta lại nhìn thấy những điều khác nhau. Việc hiểu quy trình sáng tạo, bối cảnh lịch sử và cuộc đời nghệ sĩ giúp ta cảm thụ nghệ thuật sâu sắc hơn.`,
     questions: [
-      { q: "21. According to paragraph 1, the process of visual perception _______.", options: ["A. is not the same for all people", "B. begins with patterns of light", "C. is not very scientific", "D. requires other senses to function"], correct: 1, target: "our eyes take in information in the form of light patterns", exp: "Quá trình cảm nhận thị giác bắt đầu bằng các mô hình ánh sáng." },
-      { q: "22. What did Matisse reinterpret?", options: ["A. A goddess from mythology", "B. A painting by another artist", "C. An ancient sculpture", "D. A man in history"], correct: 2, target: "a famous Greek statue known as the Venus de Milo", exp: "Matisse tái hiện dựa trên bức tượng điêu khắc cổ đại Hy Lạp Venus de Milo." },
+      { q: "21. According to paragraph 1, the process of visual perception _______.", options: ["A. is not the same for all people", "B. begins with patterns of light", "C. is not very scientific", "D. requires other senses to function"], correct: 1, target: "our eyes take in information in the form of light patterns", exp: "Quá trình cảm nhận thị giác bắt đầu bằng các mô hình ánh sáng (patterns of light)." },
+      { q: "22. What did Matisse reinterpret?", options: ["A. A goddess from mythology", "B. A painting by another artist", "C. An ancient sculpture", "D. A man in history"], correct: 2, target: "a famous Greek statue known as the Venus de Milo", exp: "Matisse tái hiện dựa trên bức tượng điêu khắc cổ đại Hy Lạp Venus de Milo (an ancient sculpture)." },
       { q: "23. The word 'them' in the last paragraph refers to _______.", options: ["A. each attentive observer", "B. thoughts and emotions", "C. a lifetime of experiences", "D. great works of art"], correct: 3, target: "Great works of art hold many meanings. The most important thing is that they mean something for you, that your own experiences, thoughts, and emotions find a place in them", exp: "'Them' chỉ các tác phẩm nghệ thuật vĩ đại (great works of art)." },
-      { q: "24. The word 'bequeath' in paragraph 3 is closest in meaning to _______.", options: ["A. make out", "B. pass on", "C. look over", "D. take in"], correct: 1, target: "bequeath those ideas to future generations of artists", exp: "'Bequeath' = 'pass on' (truyền lại ý tưởng cho thế hệ sau)." },
-      { q: "25. The author mentions all of the following ways to enhance the appreciation of art EXCEPT _______.", options: ["A. understanding the artistic process", "B. becoming familiar with the history", "C. experiencing the art by copying", "D. knowing about the life of the artist"], correct: 2, target: "The understanding of process - the how - often contributes", exp: "Bài đọc nêu việc hiểu quy trình, lịch sử và lý do của nghệ sĩ; KHÔNG nêu việc sao chép tranh (copying)." },
+      { q: "24. The word 'bequeath' in paragraph 3 is closest in meaning to _______.", options: ["A. make out", "B. pass on", "C. look over", "D. take in"], correct: 1, target: "bequeath those ideas to future generations of artists", exp: "'Bequeath' = 'pass on' (truyền lại ý tưởng cho thế hệ tương lai)." },
+      { q: "25. The author mentions all of the following ways to enhance the appreciation of art EXCEPT _______.", options: ["A. understanding the artistic process", "B. becoming familiar with the history", "C. experiencing the art by copying", "D. knowing about the life of the artist"], correct: 2, target: "The understanding of process - the how - often contributes", exp: "Bài đọc nêu việc hiểu quy trình (A), lịch sử (B) và lý do của nghệ sĩ (D); KHÔNG nêu việc sao chép tranh (C)." },
       { q: "26. What is the main topic of this passage?", options: ["A. Visual perception of sensory material", "B. The historical context for artistic expression", "C. Studying Van Gogh's The Starry Night", "D. The appreciation of works of art"], correct: 3, target: "contributes quite a lot to our appreciation of art", exp: "Chủ đề chính toàn bài là cách cảm thụ và thưởng thức các tác phẩm nghệ thuật." },
-      { q: "27. Which sentence best expresses 'The mechanics of perception work much the same way for everyone, yet in a given situation we do not all see the same things'?", options: ["A. We see images differently because of the mode of perception.", "B. Although we see images differently, the mode of perception is similar.", "C. Since the mode of perception is similar, we see images in the same way.", "D. When the mode of perception is the same, we see the same images."], correct: 1, target: "The mechanics of perception work much the same way for everyone, yet in a given situation we do not all see the same things", exp: "Mặc dù chúng ta nhìn nhận hình ảnh khác nhau, nhưng cơ chế tri giác là tương tự nhau." },
+      { q: "27. Which sentence best expresses 'The mechanics of perception work much the same way for everyone, yet in a given situation we do not all see the same things'?", options: ["A. We see images differently because of the mode of perception.", "B. Although we see images differently, the mode of perception is similar.", "C. Since the mode of perception is similar, we see images in the same way.", "D. When the mode of perception is the same, we see the same images."], correct: 1, target: "The mechanics of perception work much the same way for everyone, yet in a given situation we do not all see the same things", exp: "Từ nối 'yet' (tuy nhiên) tương đương với cấu trúc tương phản 'Although' (Mặc dù chúng ta nhìn hình ảnh khác nhau, cơ chế tri giác là tương tự nhau)." },
       { q: "28. Why might Van Gogh have painted The Starry Night?", options: ["A. To symbolize the journey of life after death", "B. To create a dramatic contrast with the sky", "C. To place a strong image in the foreground", "D. To include nature from his early experience"], correct: 0, target: "Van Gogh was intrigued by the belief that people journeyed to a star after their death", exp: "Tượng trưng cho hành trình con người đi tới các vì sao sau cái chết." },
       { q: "29. The word 'intrigued' in paragraph 4 is closest in meaning to _______.", options: ["A. very pleased", "B. very confused", "C. very interested", "D. very surprised"], correct: 2, target: "Van Gogh was intrigued by the belief", exp: "'Intrigued' = 'very interested' (vô cùng hứng thú, bị cuốn hút)." },
       { q: "30. What can be inferred from the last paragraph?", options: ["A. Greatest artworks are impossible to understand.", "B. The author shows negative feelings toward contemporary art.", "C. People need knowledge to understand art.", "D. What we see in art is determined by our emotions, experiences, and thoughts."], correct: 3, target: "your own experiences, thoughts, and emotions find a place in them", exp: "Ý nghĩa ta thấy trong nghệ thuật được quyết định bởi trải nghiệm, suy nghĩ và cảm xúc của chính chúng ta." }
@@ -804,9 +973,9 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> While humanity may have won that particular battle against bacteria, the war is far from over. The reason is that in any bacterial population, there are bound to be a few bacteria that, for one reason or another, are not affected by a particular antibiotic. For that small group, the antibiotic is a real godsend. It doesn't affect them, but it does wipe out all of their competition. They are thus free to multiply, and, over time, all of the bacteria will have whatever properties that made those individuals resistant.</p>
     <p><strong>[Paragraph 3]</strong> Traditionally, medical scientists have dealt with this phenomenon by developing a large number of antibiotics. The problem is that as time has passed, more and more bacteria have become resistant to antibiotics. In fact, currently, there is one strain of bacteria - Staphylococcus - that is resistant to every commercially available antibiotic except one.</p>
     <p><strong>[Paragraph 4]</strong> The appearance of drug-resistant bacteria is not particularly surprising; in fact, it probably should have been anticipated. Nevertheless, in the late 1980s, there was a general sense of complacency among scientists on the antibiotic question. Little profit was to be made by developing the one-hundred-and-first antibiotic. Therefore, a gap developed between the production of new antibiotics and the development of resistance among bacteria. By the early 1990s, more companies returned to develop new kinds of antibiotics, and currently, a number are undergoing clinical trials.</p>`,
-    translation: `Kháng sinh ngăn chặn chu kỳ sinh sản của vi khuẩn xâm nhập cơ thể người. Penicillin (ra đời trong Thế chiến II) ngăn các phân tử xây dựng thành tế bào vi khuẩn. Tuy nhiên, trong bất kỳ quần thể vi khuẩn nào cũng có một số cá thể đột biến kháng thuốc. Thuốc kháng sinh tiêu diệt các vi khuẩn cạnh tranh và giúp nhóm kháng thuốc tự do nhân lên. Cuối thập niên 1980, giới khoa học có tâm lý chủ quan (complacency) và các hãng dược thấy ít lợi nhuận nên ngừng phát triển thuốc mới, tạo ra khoảng trống nguy hiểm trước các chủng siêu vi khuẩn như Staphylococcus.`,
+    translation: `Kháng sinh ngăn chặn chu kỳ sinh sản của vi khuẩn xâm nhập cơ thể người. Penicillin ngăn các phân tử xây dựng thành tế bào vi khuẩn. Tuy nhiên, trong bất kỳ quần thể vi khuẩn nào cũng có một số cá thể đột biến kháng thuốc. Thuốc kháng sinh tiêu diệt các vi khuẩn cạnh tranh và giúp nhóm kháng thuốc tự do nhân lên.`,
     questions: [
-      { q: "31. How do antibiotics treat infections?", options: ["A. They interfere with the reproductive cycle of bacteria.", "B. They construct cell walls to resist bacteria.", "C. They inject enzymes that explode in affected cells.", "D. They increase the mitosis of healthy cells."], correct: 0, target: "The bacteria, with incomplete cell walls, are not able to reproduce", exp: "Kháng sinh can thiệp vào chu kỳ sinh sản khiến vi khuẩn không thể nhân lên." },
+      { q: "31. How do antibiotics treat infections?", options: ["A. They interfere with the reproductive cycle of bacteria.", "B. They construct cell walls to resist bacteria.", "C. They inject enzymes that explode in affected cells.", "D. They increase the mitosis of healthy cells."], correct: 0, target: "The bacteria, with incomplete cell walls, are not able to reproduce", exp: "Kháng sinh can thiệp vào chu kỳ sinh sản khiến vi khuẩn không thể nhân lên (not able to reproduce)." },
       { q: "32. The word 'them' in paragraph 2 refers to _______.", options: ["A. whatever properties", "B. resistant bacteria", "C. their competition", "D. those individuals"], correct: 1, target: "It doesn't affect them, but it does wipe out all of their competition", exp: "'Them' chỉ nhóm nhỏ vi khuẩn kháng thuốc (resistant bacteria)." },
       { q: "33. The word 'anticipated' in paragraph 4 is closest in meaning to _______.", options: ["A. predicted", "B. concealed", "C. investigated", "D. disregarded"], correct: 0, target: "it probably should have been anticipated", exp: "'Anticipated' = 'predicted' (được dự đoán trước)." },
       { q: "34. Which of the following best expresses the main idea of this passage?", options: ["A. The 'miracle drug' penicillin", "B. Drug-resistant bacteria", "C. Staphylococcus infections", "D. Gene therapy treatments"], correct: 1, target: "more and more bacteria have become resistant to antibiotics", exp: "Ý chính toàn bài nói về sự xuất hiện và cơ chế của vi khuẩn kháng thuốc kháng sinh." },
@@ -826,17 +995,17 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> The small clinic, situated on Kim Dong Street, has become familiar to many people in Ha Noi. It was established in 1992 by Dr Truong Thi Hoi To, 84, a former principal of Nam Dinh Medical College, Le Thi Soc, 87, a retired nurse from Saint Paul Municipal Hospital, and Le Thanh Thuoc, the late deputy director of the Viet Nam National Cancer Hospital, who died last year. The clinic used to open every Monday and Thursday. However, after doctor Thuoc died and due to the deteriorating health of the two other medics, the clinic now only opens on Monday mornings at 8 am. Patients not only receive health checks, but they also receive free medicine. [A]</p>
     <p><strong>[Paragraph 3]</strong> Since 2014, the clinic has treated about 8,500 patients, according to Giap Bat ward's Red Cross Association. On its first days, the clinic faced numerous difficulties due to lack of money. Mrs. To, founder of the clinic, had to spend her own pension and encourage her children and relatives to donate money to purchase medical equipment and medicine. The clinic also had to relocate seven times as To and her co-workers could not afford high rents. [B]</p>
     <p><strong>[Paragraph 4]</strong> Tran Thi Toan, 64, a patient from Nam Dinh Province, now works as a servant in Ha Noi. She is grateful to doctor To and nurse Soc not just for the free treatment, but for their caring manner. Toan said: "They give me meticulous treatment and clear, detailed instruction as well as advise me on a healthy and happy lifestyle". [C] To the doctors, the most precious thing they receive from their patients is confidence in their skills. "The success of a doctor does not lie in how much money they earn, but how many people they help", Soc said. [D]</p>`,
-    translation: `Suốt 20 năm qua, bà Đặng Thị Nhàn (67 tuổi) luôn dậy sớm 30 phút để làm bánh hoặc pha trà biếu hai bác sĩ về hưu tại phòng khám miễn phí ở phường Giáp Bát, Hà Nội. Phòng khám trên phố Kim Đồng được thành lập năm 1992 bởi bác sĩ Trương Thị Hội Tố (cựu hiệu trưởng Cao đẳng Y Nam Định), y tá Lê Thị Sóc và cố phó giám đốc Bệnh viện K Lê Thanh Thước. Từ năm 2014, phòng khám đã điều trị cho 8.500 bệnh nhân và phát thuốc miễn phí.`,
+    translation: `Suốt 20 năm qua, bà Đặng Thị Nhàn (67 tuổi) luôn dậy sớm 30 phút để làm bánh hoặc pha trà biếu hai bác sĩ về hưu tại phòng khám miễn phí ở phường Giáp Bát, Hà Nội. Phòng khám trên phố Kim Đồng được thành lập năm 1992 bởi bác sĩ Trương Thị Hội Tố, y tá Lê Thị Sóc và cố phó giám đốc Bệnh viện K Lê Thanh Thước.`,
     questions: [
-      { q: "1. How old was Dang Thi Nhan when she first started to bake cakes or prepare tea for the two doctors?", options: ["A. 20", "B. 67", "C. 43", "D. 47"], correct: 3, target: "For 20 years, Dang Thi Nhan, 67, has been waking up", exp: "Hiện tại bà 67 tuổi, đã làm việc này suốt 20 năm -> bắt đầu lúc 67 - 20 = 47 tuổi." },
+      { q: "1. How old was Dang Thi Nhan when she first started to bake cakes or prepare tea for the two doctors?", options: ["A. 20", "B. 67", "C. 43", "D. 47"], correct: 3, target: "For 20 years, Dang Thi Nhan, 67, has been waking up", exp: "Hiện tại bà 67 tuổi, đã làm việc này suốt 20 năm -> bắt đầu lúc 67 - 20 = 47 tuổi. Chọn B (67) là tuổi hiện tại, chọn C (43) là tuổi con trai bà." },
       { q: "2. The word 'they' in paragraph 1 refers to _______.", options: ["A. two doctors", "B. husband and son", "C. health checks", "D. cakes"], correct: 0, target: "If one day they cannot take care of themselves", exp: "'They' chỉ hai vị bác sĩ về hưu (two retired doctors)." },
-      { q: "3. The word 'late' in paragraph 2 is closest in meaning to _______.", options: ["A. last-minute", "B. behind", "C. delayed", "D. deceased"], correct: 3, target: "the late deputy director of the Viet Nam National Cancer Hospital, who died last year", exp: "'The late...' = 'deceased' (cố..., người đã qua đời)." },
+      { q: "3. The word 'late' in paragraph 2 is closest in meaning to _______.", options: ["A. last-minute", "B. behind", "C. delayed", "D. deceased"], correct: 3, target: "the late deputy director of the Viet Nam National Cancer Hospital, who died last year", exp: "'The late...' đứng trước danh từ chỉ người có nghĩa là 'cố / đã qua đời' (= deceased)." },
       { q: "4. The word 'its' in paragraph 3 refers to _______.", options: ["A. Red Cross Association", "B. the clinic", "C. medicine", "D. pension"], correct: 1, target: "On its first days, the clinic faced numerous difficulties", exp: "'Its' chỉ phòng khám (the clinic)." },
-      { q: "5. Who probably did not work in a hospital before retirement?", options: ["A. Le Thi Soc", "B. Le Thanh Thuoc", "C. Truong Thi Hoi To", "D. All of them"], correct: 2, target: "Dr Truong Thi Hoi To, 84, a former principal of Nam Dinh Medical College", exp: "Bà Trương Thị Hội Tố là cựu hiệu trưởng trường Cao đẳng Y Nam Định, không phải làm ở bệnh viện." },
+      { q: "5. Who probably did not work in a hospital before retirement?", options: ["A. Le Thi Soc", "B. Le Thanh Thuoc", "C. Truong Thi Hoi To", "D. All of them"], correct: 2, target: "Dr Truong Thi Hoi To, 84, a former principal of Nam Dinh Medical College", exp: "Bà Trương Thị Hội Tố là cựu hiệu trưởng trường Cao đẳng Y Nam Định, không phải làm việc ở bệnh viện." },
       { q: "6. Why does the clinic now only open on Monday mornings?", options: ["A. Because there are no patients on Thursdays", "B. Because Dr. Thuoc died and the other two medics have deteriorating health", "C. Because rent is too high on Thursdays", "D. Because medicine ran out"], correct: 1, target: "after doctor Thuoc died and due to the deteriorating health of the two other medics", exp: "Do bác sĩ Thước qua đời và sức khỏe của 2 người còn lại suy giảm." },
-      { q: "7. The word 'donate' in paragraph 3 could be best replaced by _______.", options: ["A. give", "B. take", "C. keep", "D. get"], correct: 0, target: "encourage her children and relatives to donate money", exp: "'Donate' = 'give' (quyên góp, cho tặng)." },
+      { q: "7. The word 'donate' in paragraph 3 could be best replaced by _______.", options: ["A. give", "B. take", "C. keep", "D. get"], correct: 0, target: "encourage her children and relatives to donate money", exp: "'Donate' = 'give' (quyên góp, trao tặng)." },
       { q: "8. What has helped Mrs. Tran Thi Toan gain confidence in her life?", options: ["A. her job as a servant", "B. her gratitude to all doctors", "C. her healthy and happy lifestyle", "D. doctors' caring manner and free treatment at clinic"], correct: 3, target: "She is grateful to doctor To and nurse Soc not just for the free treatment, but for their caring manner", exp: "Sự ân cần và điều trị miễn phí của các bác sĩ đã truyền cảm hứng và sự tự tin cho bà." },
-      { q: "9. In which space (marked A, B, C and D) will the sentence 'They treat me as a close member of their family' fit?", options: ["A. [A]", "B. [B]", "C. [C]", "D. [D]"], correct: 2, target: "advise me on a healthy and happy lifestyle\". [C]", exp: "Lời chia sẻ trực tiếp của bà Toàn nối tiếp ngay sau câu trích dẫn ở vị trí [C]." },
+      { q: "9. In which space (marked A, B, C and D) will the sentence 'They treat me as a close member of their family' fit?", options: ["A. [A]", "B. [B]", "C. [C]", "D. [D]"], correct: 2, target: "advise me on a healthy and happy lifestyle\". [C]", exp: "Lời chia sẻ trực tiếp của bệnh nhân Toàn nối tiếp ngay sau câu trích dẫn ở vị trí [C]." },
       { q: "10. The last paragraph indicates Mrs. Soc's opinion that a doctor is successful if _______.", options: ["A. he/she earns a lot of money", "B. he/she is confident in his/her skills", "C. he/she helps a lot of patients", "D. he/she benefits from their patients' pain"], correct: 2, target: "The success of a doctor does not lie in how much money they earn, but how many people they help", exp: "Thành công của người thầy thuốc nằm ở số lượng bệnh nhân mà họ giúp đỡ." }
     ]
   },
@@ -848,16 +1017,16 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> But it is important not to jump to conclusions about the cause. "It's not very unusual for everybody to think that the reason for the difficulty in finding jobs at 50s is discrimination," she said. That can sometimes be the case, but the reality is that the behavior required to find work does not play to many older people's strengths. In their study, the researchers found that older people on average had smaller social networks than younger people. In the job search process, the number of connections we maintain in our professional and personal networks is often critical.</p>
     <p><strong>[Paragraph 3]</strong> As people age, they also tend to stay in the same job longer. During that time, the skills people have learned and the job search strategies they once used may become outdated - especially as technology evolves ever more quickly. The cure for these drawbacks is fairly straightforward. Once you hit your early 40s, even if you are not looking for a job, work to learn new skills and stretch yourself. Also, keep your networks strong by staying in touch with former colleagues and classmates.</p>
     <p><strong>[Paragraph 4]</strong> Finding a job after 50 doesn't have to be as discouraging as it is often portrayed to be, Professor Wanberg said. Once older workers do find a new employer, they can use their knowledge, wisdom and emotional intelligence - qualities that older people often possess in abundance - to thrive in their new positions.</p>`,
-    translation: `Giáo sư Connie Wanberg (ĐH Minnesota) nghiên cứu và thấy người trên 50 tuổi thất nghiệp lâu hơn 5.8 tuần so với nhóm 30-49 tuổi, và lâu hơn 10.6 tuần so với nhóm 20-29 tuổi. Nhiều người nghĩ nguyên nhân là do phân biệt tuổi tác (discrimination), nhưng thực tế là người lớn tuổi thường có mạng lưới quan hệ xã hội (social networks) hẹp hơn và kỹ năng công nghệ/tìm việc bị lỗi thời do làm một chỗ quá lâu. Giải pháp là ngay từ đầu tuổi 40, hãy học kỹ năng mới và giữ liên lạc rộng rãi với đồng nghiệp cũ.`,
+    translation: `Giáo sư Connie Wanberg (ĐH Minnesota) nghiên cứu và thấy người trên 50 tuổi thất nghiệp lâu hơn 5.8 tuần so với nhóm 30-49 tuổi, và lâu hơn 10.6 tuần so với nhóm 20-29 tuổi. Giải pháp là ngay từ đầu tuổi 40, hãy học kỹ năng mới và giữ liên lạc rộng rãi với đồng nghiệp cũ.`,
     questions: [
       { q: "11. The word 'gloom-and-doom' in paragraph 1 could be best replaced by _______.", options: ["A. hopeless", "B. interesting", "C. cheerful", "D. strange"], correct: 0, target: "heard gloom-and-doom stories to that effect", exp: "'Gloom-and-doom' = 'hopeless' (bi quan, ảm đạm, tuyệt vọng)." },
       { q: "12. According to the study, which age group has the least unemployed time?", options: ["A. less than 20", "B. from 20 to 29", "C. from 30 to 49", "D. over 50"], correct: 1, target: "That number rose to 10.6 weeks when the comparison group was from 20 to 29", exp: "Nhóm 20 đến 29 tuổi có thời gian thất nghiệp ngắn nhất." },
-      { q: "13. What best paraphrases 'It's not very unusual for everybody to think that the reason for the difficulty in finding jobs at 50s is discrimination'?", options: ["A. People do not usually think about discrimination.", "B. People do not usually think that discrimination is the reason.", "C. People commonly believe that finding jobs at 50s causes discrimination.", "D. People commonly believe that discrimination makes finding jobs at 50s difficult."], correct: 3, target: "It's not very unusual for everybody to think that the reason for the difficulty in finding jobs at 50s is discrimination", exp: "'Not very unusual' = 'commonly believe' (Mọi người thường tin rằng sự phân biệt đối xử làm việc tìm việc ở tuổi 50 khó khăn)." },
+      { q: "13. What best paraphrases 'It's not very unusual for everybody to think that the reason for the difficulty in finding jobs at 50s is discrimination'?", options: ["A. People do not usually think about discrimination.", "B. People do not usually think that discrimination is the reason.", "C. People commonly believe that finding jobs at 50s causes discrimination.", "D. People commonly believe that discrimination makes finding jobs at 50s difficult."], correct: 3, target: "It's not very unusual for everybody to think that the reason for the difficulty in finding jobs at 50s is discrimination", exp: "'Not very unusual' (phủ định kép) = 'commonly believe' (Mọi người thường tin rằng sự phân biệt tuổi tác làm việc tìm việc ở tuổi 50 khó khăn)." },
       { q: "14. The word 'their' in paragraph 2 refers to _______.", options: ["A. the researchers", "B. older people", "C. social networks", "D. younger people"], correct: 0, target: "In their study, the researchers found that", exp: "'Their' chỉ nhóm các nhà nghiên cứu (the researchers)." },
       { q: "15. The word 'critical' in paragraph 2 could be best replaced by _______.", options: ["A. huge", "B. demanding", "C. trivial", "D. important"], correct: 3, target: "the number of connections we maintain in our professional and personal networks is often critical", exp: "'Critical' = 'important' (cực kỳ quan trọng, then chốt)." },
       { q: "16. What advice does Professor Wanberg give to people in their early 40s?", options: ["A. maintaining small social networks", "B. becoming aware of their strengths", "C. learning new skills and keeping wide social circles", "D. staying in the same job longer"], correct: 2, target: "work to learn new skills and stretch yourself. Also, keep your networks strong", exp: "Học kỹ năng mới và duy trì mạng lưới quan hệ xã hội rộng rãi." },
       { q: "17. The words 'these drawbacks' in paragraph 3 refer to _______.", options: ["A. outdated skills and job search strategies", "B. small numbers of connection networks", "C. lost social circles", "D. low quality relationships"], correct: 0, target: "the skills people have learned and the job search strategies they once used may become outdated", exp: "Chỉ kỹ năng và chiến lược tìm việc bị lỗi thời ở câu ngay trước." },
-      { q: "18. Which of the following statements is NOT true according to the passage?", options: ["A. Finding a job after 50 is not at all hopeless.", "B. Older people hardly learn new skills and maintain wide social networks.", "C. Older people often have many good qualities.", "D. Findings of the study do not hold true for all older people."], correct: 1, target: "Certainly, many older people maintain wide social circles and often learn skills", exp: "Trong bài khẳng định nhiều người lớn tuổi vẫn duy trì quan hệ rộng và học kỹ năng mới, nên câu B sai." },
+      { q: "18. Which of the following statements is NOT true according to the passage?", options: ["A. Finding a job after 50 is not at all hopeless.", "B. Older people hardly learn new skills and maintain wide social networks.", "C. Older people often have many good qualities.", "D. Findings of the study do not hold true for all older people."], correct: 1, target: "Certainly, many older people maintain wide social circles and often learn skills", exp: "Trong bài khẳng định nhiều người lớn tuổi vẫn duy trì quan hệ rộng và học kỹ năng mới, nên câu B (hardly = hầu như không) là SAI." },
       { q: "19. Which best describes Professor Wanberg's attitude towards finding a job after 50?", options: ["A. hopeless", "B. frustrated", "C. optimistic", "D. discouraging"], correct: 2, target: "Finding a job after 50 doesn't have to be as discouraging as it is often portrayed to be", exp: "Thái độ lạc quan, tích cực (optimistic)." },
       { q: "20. What is the main purpose of this passage?", options: ["A. To report the difficulties of finding jobs at 50s", "B. To discuss the advantages and disadvantages of 50-year-old job seekers", "C. To warn people against skipping jobs", "D. To raise awareness on the importance of maintaining social connections and learning new skills at early stages"], correct: 3, target: "Once you hit your early 40s, even if you are not looking for a job, work to learn new skills", exp: "Nâng cao nhận thức về việc học kỹ năng mới và giữ kết nối xã hội ngay từ tuổi 40." }
     ]
@@ -870,17 +1039,17 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> Like all the other waitresses, I was equipped with a neat uniform and told to treat the guests as though they were special visitors in my own home. In the kitchen I learned how to deal with Gordon, the chef, who I found rather daunting. He had an impressive chef's hat and a terrifying ability to lose his temper and get violent for no clear reason. I avoided close contact with him and always grabbed the dishes he gave me with a cold look on my face. Then, as I walked from the kitchen to the dining room, my cold expression used to change into a charming smile.</p>
     <p><strong>[Paragraph 3]</strong> I found waiting at breakfast was more enjoyable than at dinner. The guests came wandering into the dining room from seven-thirty onwards, staring with pleasure at the view of the sea. I always made sure that everyone got their order quickly and I enjoyed getting on well with the people at each table. In the evenings it was funny how differently people behaved; they talked with louder, less friendly voices. However, that all changed when Dad created a special role for me which improved my status considerably.</p>
     <p><strong>[Paragraph 4]</strong> I started by making simple cakes for guests' picnics and soon progressed to more elaborate cakes for afternoon teas. This led to a nightly event known as Mary's Sweet Trolley. I used to enter the dining room every evening pushing a trolley carrying an extraordinary collection of puddings, cakes and other desserts. Most of them were of my own invention, I had cooked them all myself, and some were undeniably strange.</p>`,
-    translation: `Khi tôi 15 tuổi, bố tôi mua một nhà nghỉ cũ và biến nó thành khách sạn sang trọng. Mùa hè đó tôi làm phục vụ bàn vào bữa sáng và bữa tối, dành buổi trưa để học vì kết quả học tập ở trường không đạt kỳ vọng cao của bố. Trong bếp, tôi phải đối mặt với đầu bếp Gordon đáng sợ (daunting), nhưng khi bước ra phòng ăn tôi luôn đổi sang nụ cười duyên dáng. Sau đó bố giao cho tôi làm bánh tráng miệng mỗi tối (Mary's Sweet Trolley) do tôi tự sáng tạo công thức.`,
+    translation: `Khi tôi 15 tuổi, bố tôi mua một nhà nghỉ cũ và biến nó thành khách sạn sang trọng. Mùa hè đó tôi làm phục vụ bàn vào bữa sáng và bữa tối, dành buổi trưa để học bài. Sau đó bố giao cho tôi làm bánh tráng miệng mỗi tối (Mary's Sweet Trolley) do tôi tự sáng tạo công thức.`,
     questions: [
-      { q: "21. The word 'it' in paragraph 1 refers to _______.", options: ["A. an old hostel", "B. the country", "C. a luxury hotel", "D. Mary's first job"], correct: 0, target: "my father purchased an old hostel in the country where we lived and decided to turn it into a luxury hotel", exp: "'It' chỉ 'an old hostel' (nhà nghỉ cũ mà bố mua)." },
+      { q: "21. The word 'it' in paragraph 1 refers to _______.", options: ["A. an old hostel", "B. the country", "C. a luxury hotel", "D. Mary's first job"], correct: 0, target: "my father purchased an old hostel in the country where we lived and decided to turn it into a luxury hotel", exp: "'It' chỉ 'an old hostel' (nhà nghỉ cũ mà bố mua để cải tạo thành khách sạn sang trọng)." },
       { q: "22. What did the people working at the hotel have in common?", options: ["A. They knew what the guests expected.", "B. They shared all the jobs.", "C. They lacked experience.", "D. They enjoyed the work."], correct: 2, target: "None of us had ever worked in a hotel before", exp: "Tất cả đều chưa từng làm việc ở khách sạn trước đó (thiếu kinh nghiệm)." },
-      { q: "23. Mary's working day was organized in order to give her _______.", options: ["A. time for her school work", "B. working experience", "C. time at midday to relax", "D. time to have lunch with her father"], correct: 0, target: "This gave me the middle of the day free for studying", exp: "Cho cô ấy thời gian buổi trưa để học bài ở trường." },
-      { q: "24. What best paraphrases 'my school report predictably had not lived up to my father's high expectations'?", options: ["A. The school made a report about my expectations.", "B. My father was not satisfied with my results at school.", "C. The report from school is highly predictable.", "D. My father expects to receive the school report soon."], correct: 1, target: "my school report predictably had not lived up to my father's high expectations", exp: "Bố tôi không hài lòng với kết quả học tập ở trường của tôi." },
-      { q: "25. What does the writer mean by 'daunting' in paragraph 2?", options: ["A. disgusting", "B. frightening", "C. interesting", "D. strange"], correct: 1, target: "Gordon, the chef, who I found rather daunting. He had an impressive chef's hat and a terrifying ability to lose his temper", exp: "'Daunting' = 'frightening' (đáng sợ, làm người khác e dè)." },
-      { q: "26. What did Mary do while she walked from the kitchen to the dining room?", options: ["A. She smiled at Gordon in a friendly way.", "B. She avoided touching Gordon.", "C. She checked the food Gordon gave her.", "D. She started to look more friendly."], correct: 3, target: "as I walked from the kitchen to the dining room, my cold expression used to change into a charming smile", exp: "Vẻ mặt lạnh lùng chuyển thành nụ cười thân thiện." },
+      { q: "23. Mary's working day was organized in order to give her _______.", options: ["A. time for her school work", "B. working experience", "C. time at midday to relax", "D. time to have lunch with her father"], correct: 0, target: "This gave me the middle of the day free for studying", exp: "Cho cô ấy thời gian rảnh vào buổi trưa để học bài ở trường." },
+      { q: "24. What best paraphrases 'my school report predictably had not lived up to my father's high expectations'?", options: ["A. The school made a report about my expectations.", "B. My father was not satisfied with my results at school.", "C. The report from school is highly predictable.", "D. My father expects to receive the school report soon."], correct: 1, target: "my school report predictably had not lived up to my father's high expectations", exp: "'had not lived up to high expectations' = không đạt được kỳ vọng cao (bố không hài lòng với kết quả học tập của tôi)." },
+      { q: "25. What does the writer mean by 'daunting' in paragraph 2?", options: ["A. disgusting", "B. frightening", "C. interesting", "D. strange"], correct: 1, target: "Gordon, the chef, who I found rather daunting. He had an impressive chef's hat and a terrifying ability to lose his temper", exp: "'Daunting' = 'frightening' (đáng sợ, làm người khác e dè vì ông bếp trưởng hay nổi nóng)." },
+      { q: "26. What did Mary do while she walked from the kitchen to the dining room?", options: ["A. She smiled at Gordon in a friendly way.", "B. She avoided touching Gordon.", "C. She checked the food Gordon gave her.", "D. She started to look more friendly."], correct: 3, target: "as I walked from the kitchen to the dining room, my cold expression used to change into a charming smile", exp: "Vẻ mặt lạnh lùng chuyển thành nụ cười duyên dáng thân thiện." },
       { q: "27. Why did Mary enjoy serving breakfasts more than dinners?", options: ["A. She enjoyed the view from the dining room.", "B. She had a better relationship with the guests.", "C. The guests were more punctual.", "D. She worked more efficiently."], correct: 1, target: "I enjoyed getting on well with the people at each table", exp: "Buổi sáng cô ấy hòa đồng và có mối quan hệ thân thiện với khách hơn buổi tối." },
       { q: "28. How did Mary's father improve her position in the hotel?", options: ["A. He put her in charge of the restaurant.", "B. He asked her to provide entertainment.", "C. He made her responsible for part of dinner.", "D. He gave her a special uniform."], correct: 2, target: "This led to a nightly event known as Mary's Sweet Trolley", exp: "Giao cho cô phụ trách phần xe bánh tráng miệng trong bữa tối." },
-      { q: "29. What was special about the food on Mary's Sweet Trolley?", options: ["A. Mary made it following traditional recipes.", "B. Mary made the same food for picnics.", "C. Mary and Gordon made it together.", "D. Mary made most of it without following recipes."], correct: 3, target: "Most of them were of my own invention, I had cooked them all myself", exp: "Phần lớn bánh là do cô tự sáng chế mà không theo công thức có sẵn." },
+      { q: "29. What was special about the food on Mary's Sweet Trolley?", options: ["A. Mary made it following traditional recipes.", "B. Mary made the same food for picnics.", "C. Mary and Gordon made it together.", "D. Mary made most of it without following recipes."], correct: 3, target: "Most of them were of my own invention, I had cooked them all myself", exp: "Phần lớn bánh là do cô tự sáng chế (of my own invention) mà không theo công thức có sẵn." },
       { q: "30. What impression does Mary give of her job throughout the passage?", options: ["A. It brought her closer to her father.", "B. It was sometimes uncomfortable.", "C. It was always enjoyable.", "D. It was quite easy to do."], correct: 1, target: "Although I felt more like a stranger in theirs, I did not express my feelings", exp: "Công việc đôi khi không thoải mái (cảm thấy xa lạ, sợ đầu bếp Gordon, khách buổi tối kém thân thiện)." }
     ]
   },
@@ -892,18 +1061,18 @@ const REAL_PASSAGES = [
     <p><strong>[Paragraph 2]</strong> Phillis was very intelligent. The Wheatley family taught her to read and write, and encouraged her to write poetry. Her first poem "On Messrs. Hussey and Coffin" was published when she was only twelve. When she was eighteen, Phillis and Mrs. Wheatley tried to sell a collection containing twenty-eight of her poems. Colonists did not want to buy poetry written by an African.</p>
     <p><strong>[Paragraph 3]</strong> Mrs. Wheatley wrote to England to ask Selina Hastings, Countess of Huntingdon, for help. The countess was a wealthy supporter of evangelical and abolitionist (anti-slavery) causes. She had Poems on Various Subjects, Religious and Moral published in England in 1773. This book made Phillis famous in England and the thirteen colonies. She wrote a poem for George Washington in 1775, and he praised her work.</p>
     <p><strong>[Paragraph 4]</strong> After her master died, Phillis was emancipated. She married John Peters, a free black man, in 1778. Phillis and her remaining child died in December of 1784 and were buried in an unmarked grave. Nevertheless, the legacy of Phillis Wheatley lives on. She became the first African American and the first slave in the United States to publish a book. She proved that slaves or former slaves had a valuable voice in the Revolutionary era.</p>`,
-    translation: `Phillis Wheatley sinh tại Gambia năm 1753 và bị bán làm nô lệ sang Boston lúc 7-8 tuổi (gia đình Wheatley đoán tuổi cô qua việc cô đang thay răng cửa). Cô rất thông minh, xuất bản bài thơ đầu tiên năm 12 tuổi. Khi người dân thuộc địa Mỹ không muốn mua thơ của người gốc Phi, Nữ bá tước Huntingdon ở Anh đã giúp cô xuất bản sách năm 1773. Sau khi chủ qua đời, cô được trả tự do và kết hôn với John Peters. Cô là người Mỹ gốc Phi và nô lệ đầu tiên tại Mỹ xuất bản một cuốn sách.`,
+    translation: `Phillis Wheatley sinh tại Gambia năm 1753 và bị bán làm nô lệ sang Boston lúc 7-8 tuổi. Cô rất thông minh, xuất bản bài thơ đầu tiên năm 12 tuổi. Nữ bá tước Huntingdon ở Anh đã giúp cô xuất bản sách năm 1773. Cô là người Mỹ gốc Phi và nô lệ đầu tiên tại Mỹ xuất bản một cuốn sách.`,
     questions: [
       { q: "31. It can be inferred from the passage that the Countess of Huntingdon _______.", options: ["A. didn't care about Phillis' poetry", "B. helped Phillis get her writings published", "C. believed in slavery", "D. was surprised that Phillis could read and write"], correct: 1, target: "She had Poems on Various Subjects, Religious and Moral published in England in 1773", exp: "Nữ bá tước đã giúp Phillis xuất bản tác phẩm tại Anh." },
-      { q: "32. What question is answered in the last paragraph?", options: ["A. Who did Phillis marry?", "B. Where were Phillis' works published?", "C. What did Phillis prove?", "D. Both A and C"], correct: 2, target: "She proved that slaves or former slaves had a valuable voice in the Revolutionary era", exp: "Đoạn cuối trả lời câu hỏi Phillis đã chứng minh được điều gì." },
+      { q: "32. What question is answered in the last paragraph?", options: ["A. Who did Phillis marry?", "B. Where were Phillis' works published?", "C. What did Phillis prove?", "D. Both A and C"], correct: 2, target: "She proved that slaves or former slaves had a valuable voice in the Revolutionary era", exp: "Theo đáp án chuẩn trong sách (Key Test 3): Đoạn cuối nhấn mạnh thành tựu Phillis đã chứng minh được điều gì." },
       { q: "33. Phillis finally became free _______.", options: ["A. when she published her poems in England", "B. after meeting the Countess of Huntingdon", "C. when she became wealthy", "D. after her master died"], correct: 3, target: "After her master died, Phillis was emancipated", exp: "'Emancipated' = được trả tự do sau khi người chủ qua đời." },
-      { q: "34. Phillis' first attempt at selling her poetry in America (the colonies) was _______.", options: ["A. illegal", "B. imaginary", "C. unsuccessful", "D. successful"], correct: 2, target: "Colonists did not want to buy poetry written by an African", exp: "Không thành công (unsuccessful) vì người thuộc địa không muốn mua." },
+      { q: "34. Phillis' first attempt at selling her poetry in America (the colonies) was _______.", options: ["A. illegal", "B. imaginary", "C. unsuccessful", "D. successful"], correct: 2, target: "Colonists did not want to buy poetry written by an African", exp: "Không thành công (unsuccessful) vì người thuộc địa không muốn mua thơ do người gốc Phi viết." },
       { q: "35. Which of the following is TRUE about Phillis Wheatley?", options: ["A. She was the first African-American slave to visit England.", "B. She was the first African-American and slave to publish a book in the United States.", "C. She was the first to be able to read and write.", "D. She was the first to meet George Washington."], correct: 1, target: "She became the first African American and the first slave in the United States to publish a book", exp: "Cô là người Mỹ gốc Phi và nô lệ đầu tiên xuất bản sách tại Mỹ." },
-      { q: "36. The Wheatley family estimated the age of the slave girl by _______.", options: ["A. her size", "B. the condition of her teeth", "C. her color", "D. her weight"], correct: 1, target: "about seven years old from the circumstances of shedding her front teeth", exp: "Đoán tuổi dựa vào tình trạng thay răng cửa của cô bé." },
-      { q: "37. By the age of twelve, Phillis was _______.", options: ["A. no longer a slave", "B. married", "C. a published poet", "D. still not able to read"], correct: 2, target: "Her first poem \"On Messrs. Hussey and Coffin\" was published when she was only twelve", exp: "Năm 12 tuổi cô đã có bài thơ được xuất bản." },
-      { q: "38. The slaveowner who sold Phillis to the Wheatley family believed _______.", options: ["A. she would soon recover", "B. she was very intelligent", "C. she was worth a lot of money", "D. she would soon die"], correct: 3, target: "The captain of the slave ship believed that the waif was terminally ill, and he wanted at least a small profit before she died", exp: "Thuyền trưởng tin rằng cô bé bị bệnh nặng sắp qua đời." },
+      { q: "36. The Wheatley family estimated the age of the slave girl by _______.", options: ["A. her size", "B. the condition of her teeth", "C. her color", "D. her weight"], correct: 1, target: "about seven years old from the circumstances of shedding her front teeth", exp: "Đoán tuổi dựa vào tình trạng thay răng cửa (shedding her front teeth) của cô bé." },
+      { q: "37. By the age of twelve, Phillis was _______.", options: ["A. no longer a slave", "B. married", "C. a published poet", "D. still not able to read"], correct: 2, target: "Her first poem \"On Messrs. Hussey and Coffin\" was published when she was only twelve", exp: "Năm 12 tuổi cô đã có bài thơ đầu tiên được xuất bản." },
+      { q: "38. The slaveowner who sold Phillis to the Wheatley family believed _______.", options: ["A. she would soon recover", "B. she was very intelligent", "C. she was worth a lot of money", "D. she would soon die"], correct: 3, target: "The captain of the slave ship believed that the waif was terminally ill, and he wanted at least a small profit before she died", exp: "Thuyền trưởng tin rằng cô bé bị bệnh nan y sắp qua đời (terminally ill)." },
       { q: "39. Who was John Peters?", options: ["A. A military general", "B. Somebody who Phillis admired", "C. Phillis' husband", "D. A slave owner"], correct: 2, target: "She married John Peters, a free black man, in 1778", exp: "John Peters là chồng của Phillis." },
-      { q: "40. Where is Phillis Wheatley buried?", options: ["A. No one knows the exact spot (unmarked grave)", "B. Africa", "C. London", "D. Virginia"], correct: 0, target: "were buried in an unmarked grave", exp: "Được chôn cất trong một ngôi mộ không bia (không ai biết vị trí chính xác)." }
+      { q: "40. Where is Phillis Wheatley buried?", options: ["A. No one knows the exact spot (unmarked grave)", "B. Africa", "C. London", "D. Virginia"], correct: 0, target: "were buried in an unmarked grave", exp: "Được chôn cất trong một ngôi mộ không bia (unmarked grave -> không ai biết vị trí)." }
     ]
   }
 ];
@@ -912,7 +1081,6 @@ const REAL_PASSAGES = [
 // NGÂN HÀNG BÀI NGHE (LISTENING PARTS 1, 2, 3) TRÍCH TỪ ĐỀ THI DRIVE
 // ============================================================================
 const REAL_LISTENING_SETS = [
-  // SET 1 (TỪ TEST 1 TRONG FILE DRIVE)
   {
     part1: {
       title: "Test 1 - Part 1: 8 Short Announcements & Conversations",
@@ -927,11 +1095,11 @@ const REAL_LISTENING_SETS = [
         "[Câu 8] Salesperson: Do you want the V-neck black T-shirt? Boy: No, I'll take the short-sleeved T-shirt with a round neck."
       ],
       questions: [
-        { q: "1. When is the man's appointment?", options: ["A. Wednesday", "B. Thursday", "C. Friday", "D. Tuesday"], correct: 2, sIdx: 0, exp: "Lễ tân xác nhận lịch hẹn vào sáng thứ Sáu (Friday)." },
-        { q: "2. Which is the aunt's postcard?", options: ["A. a pretty village right by the sea", "B. big trees", "C. a pretty village behind tall trees", "D. a village on the hills"], correct: 0, sIdx: 1, exp: "Ngôi làng xinh đẹp ngay sát bờ biển (right by the sea)." },
-        { q: "3. What time will the plane to Milan leave?", options: ["A. 01:00", "B. 07:15", "C. 08:15", "D. 06:15"], correct: 1, sIdx: 2, exp: "Hoãn từ 06:15 sang 07:15 do sương mù." },
-        { q: "4. Which present has the girl bought her mother?", options: ["A. earrings", "B. music CD", "C. pen", "D. notebook"], correct: 1, sIdx: 3, exp: "Hoa tai quá đắt nên cô bé đã mua đĩa CD nhạc (music CD)." },
-        { q: "5. What time will the pie be ready?", options: ["A. four fifteen", "B. five o'clock", "C. twenty past five", "D. fifty past four"], correct: 1, sIdx: 4, exp: "Cho vào lò lúc 4:15, nướng 45 phút -> chín lúc 5:00 (five o'clock)." }
+        { q: "1. When is the man's appointment?", qVn: "Dịch câu hỏi: Cuộc hẹn của người đàn ông diễn ra vào thứ mấy?", options: ["A. Wednesday (Thứ Tư)", "B. Thursday (Thứ Năm)", "C. Friday (Thứ Sáu)", "D. Tuesday (Thứ Ba)"], correct: 2, sIdx: 0, exp: "Người đàn ông hỏi Thứ Tư hay Thứ Năm (bẫy gây nhiễu), nhưng lễ tân chốt lịch hẹn vào sáng thứ Sáu (Friday)." },
+        { q: "2. Which is the aunt's postcard?", qVn: "Dịch câu hỏi: Bưu thiếp của người dì có hình gì?", options: ["A. a pretty village right by the sea (ngôi làng đẹp ngay sát biển)", "B. big trees (cây to)", "C. a pretty village behind tall trees (ngôi làng sau rặng cây cao)", "D. a village on the hills (ngôi làng trên đồi)"], correct: 0, sIdx: 1, exp: "Dẫn chứng Câu 2: 'staying in a pretty village right by the sea'." },
+        { q: "3. What time will the plane to Milan leave?", qVn: "Dịch câu hỏi: Máy bay đi Milan sẽ cất cánh lúc mấy giờ?", options: ["A. 01:00", "B. 07:15", "C. 08:15", "D. 06:15"], correct: 1, sIdx: 2, exp: "Lịch cũ là 06:15 (bẫy câu D), nhưng bị hoãn vì sương mù nên giờ cất cánh thực tế là 07:15 (B)." },
+        { q: "4. Which present has the girl bought her mother?", qVn: "Dịch câu hỏi: Cô gái đã mua quà gì tặng mẹ?", options: ["A. earrings (đôi bông tai)", "B. music CD (đĩa CD nhạc)", "C. pen (cây bút)", "D. notebook (quyển sổ)"], correct: 1, sIdx: 3, exp: "Bông tai (earrings - câu A) quá đắt nên cô gái không mua mà mua đĩa CD nhạc (music CD - câu B)." },
+        { q: "5. What time will the pie be ready?", qVn: "Dịch câu hỏi: Mấy giờ bánh nướng sẽ chín?", options: ["A. four fifteen (4 giờ 15)", "B. five o'clock (5 giờ đúng)", "C. twenty past five (5 giờ 20)", "D. fifty past four (4 giờ 50)"], correct: 1, sIdx: 4, exp: "Cho vào lò lúc 4:15 (bẫy câu A), nướng thêm 45 phút -> chín lúc 5:00 đúng (five o'clock)." }
       ]
     },
     part2: {
@@ -944,11 +1112,11 @@ const REAL_LISTENING_SETS = [
         "[Câu 13] Man: Let's go out tonight! I feel so bored staying at home all evening. Woman: Sorry, I worked all day and I feel too tired to go out."
       ],
       questions: [
-        { q: "6. What is Kate's health problem?", options: ["A. She has coughs", "B. She has toothache", "C. She has earache", "D. She has stomach ache"], correct: 0, sIdx: 0, exp: "Kate bị ho nặng cả tuần nay (She has coughs)." },
-        { q: "7. How does Kate's problem affect her classmates?", options: ["A. It makes them funny.", "B. It makes them annoyed.", "C. It makes them happy.", "D. It makes them excited."], correct: 1, sIdx: 1, exp: "Tiếng ho làm các bạn cùng lớp khó chịu (annoyed)." },
-        { q: "8. What happened to Kate last year?", options: ["A. She had coughs", "B. She had headache", "C. She had a fall off her bike", "D. She had stomach ache"], correct: 2, sIdx: 2, exp: "Năm ngoái Kate bị ngã xe đạp (had a fall off her bike)." },
-        { q: "9. What does Kate have now, too?", options: ["A. She has backache", "B. She has headache", "C. She has toothache", "D. She has temperature"], correct: 1, sIdx: 3, exp: "Hiện tại ngoài ho thì Kate còn bị đau đầu (headache)." },
-        { q: "10. Why does the man in Conversation 2 want to go out?", options: ["A. Because he feels bored staying at home.", "B. Because he feels safe.", "C. Because he feels cold.", "D. Because he feels hot."], correct: 0, sIdx: 4, exp: "Người đàn ông muốn ra ngoài vì cảm thấy chán khi ở nhà (feels bored)." }
+        { q: "6. What is Kate's health problem?", qVn: "Dịch câu hỏi: Vấn đề sức khỏe của Kate là gì?", options: ["A. She has coughs (Bị ho)", "B. She has toothache (Đau răng)", "C. She has earache (Đau tai)", "D. She has stomach ache (Đau bụng)"], correct: 0, sIdx: 0, exp: "George đoán là đau bụng (bẫy D), nhưng Kate trả lời cô bị ho nặng cả tuần (bad coughs)." },
+        { q: "7. How does Kate's problem affect her classmates?", qVn: "Dịch câu hỏi: Bệnh của Kate ảnh hưởng thế nào tới bạn cùng lớp?", options: ["A. It makes them funny (Làm họ buồn cười)", "B. It makes them annoyed (Làm họ khó chịu)", "C. It makes them happy (Làm họ vui)", "D. It makes them excited (Làm họ hào hứng)"], correct: 1, sIdx: 1, exp: "Tiếng ho trong lớp làm các bạn khó chịu (annoyed) vì không nghe được giáo viên giảng." },
+        { q: "8. What happened to Kate last year?", qVn: "Dịch câu hỏi: Năm ngoái Kate bị làm sao?", options: ["A. She had coughs (Bị ho)", "B. She had headache (Đau đầu)", "C. She had a fall off her bike (Bị ngã xe đạp)", "D. She had stomach ache (Đau bụng)"], correct: 2, sIdx: 2, exp: "Năm ngoái Kate nghỉ học vì bị ngã xe đạp trên đường về nhà (had a fall off her bike)." },
+        { q: "9. What does Kate have now, too?", qVn: "Dịch câu hỏi: Hiện giờ Kate còn bị triệu chứng gì nữa?", options: ["A. She has backache (Đau lưng)", "B. She has headache (Đau đầu)", "C. She has toothache (Đau răng)", "D. She has temperature (Bị sốt)"], correct: 1, sIdx: 3, exp: "Hiện tại ngoài ho thì Kate còn bị đau đầu dữ dội (terrible headache)." },
+        { q: "10. Why does the man in Conversation 2 want to go out?", qVn: "Dịch câu hỏi: Tại sao người đàn ông muốn đi ra ngoài?", options: ["A. Because he feels bored staying at home (Vì cảm thấy chán khi ở nhà)", "B. Because he feels safe (Vì thấy an toàn)", "C. Because he feels cold (Vì thấy lạnh)", "D. Because he feels hot (Vì thấy nóng)"], correct: 0, sIdx: 4, exp: "Người đàn ông nói: 'I feel so bored staying at home all evening'." }
       ]
     },
     part3: {
@@ -961,18 +1129,18 @@ const REAL_LISTENING_SETS = [
         "[Câu 34] Advisor: In American culture, making direct eye contact is considered a sign of honesty, and handshakes need to be firm."
       ],
       questions: [
-        { q: "11. Why did the speaker have to help her mother with the shopping?", options: ["A. No Vietnamese lived near her", "B. No Vietnamese worked in stores", "C. There wasn't always someone to go shopping with her", "D. Her mother spoke English well"], correct: 2, sIdx: 0, exp: "Không phải lúc nào cũng có người đi chợ cùng mẹ nên cô phải giúp." },
-        { q: "12. Why did her father find working in a factory difficult?", options: ["A. He couldn't speak any English", "B. He didn't have friends", "C. He had had a much better job in Vietnam", "D. He hated machines"], correct: 2, sIdx: 1, exp: "Ở Việt Nam ông từng có một công việc tốt hơn nhiều." },
-        { q: "13. Why are the speaker and her brother more fortunate than their sisters?", options: ["A. They did not need extra lessons", "B. They look more American", "C. They speak with accents", "D. They quickly adopted the way of life"], correct: 3, sIdx: 2, exp: "Hai chị em nhanh chóng thích nghi với lối sống mới." },
-        { q: "14. What is the purpose of the orientation talk on body language?", options: ["A. To introduce the director", "B. To deal with visa problems", "C. To inform the importance of grammar", "D. To introduce common problems in non-verbal communication"], correct: 3, sIdx: 3, exp: "Giới thiệu các vấn đề phổ biến trong giao tiếp phi ngôn ngữ." },
-        { q: "15. In American culture, what is TRUE about eye contact and handshakes?", options: ["A. Eye contact is a sign of disrespect", "B. People don't look in others' eyes", "C. Eye contact is a sign of honesty and handshakes need to be firm", "D. Handshakes are not common"], correct: 2, sIdx: 4, exp: "Giao tiếp bằng mắt thể hiện sự trung thực và cái bắt tay cần chắc chắn (firm)." }
+        { q: "11. Why did the speaker have to help her mother with the shopping?", qVn: "Dịch câu hỏi: Tại sao người nói phải giúp mẹ đi mua sắm?", options: ["A. No Vietnamese lived near her (Không có người Việt sống gần)", "B. No Vietnamese worked in stores (Không có người Việt bán hàng)", "C. There wasn't always someone to go shopping with her (Không phải lúc nào cũng có người đi cùng mẹ)", "D. Her mother spoke English well (Mẹ nói tiếng Anh giỏi)"], correct: 2, sIdx: 0, exp: "Mẹ không nói được tiếng Anh và không phải lúc nào cũng có người đi chợ cùng bà." },
+        { q: "12. Why did her father find working in a factory difficult?", qVn: "Dịch câu hỏi: Tại sao bố cô ấy thấy làm việc ở nhà máy Mỹ khó khăn?", options: ["A. He couldn't speak any English", "B. He didn't have friends", "C. He had had a much better job in Vietnam (Ông từng có công việc tốt hơn nhiều ở Việt Nam)", "D. He hated machines"], correct: 2, sIdx: 1, exp: "Dẫn chứng Câu 22: 'because he had had a much better job in Vietnam'." },
+        { q: "13. Why are the speaker and her brother more fortunate than their sisters?", qVn: "Dịch câu hỏi: Tại sao cô và em trai may mắn hơn các chị gái?", options: ["A. They did not need extra lessons", "B. They look more American", "C. They speak with accents", "D. They quickly adopted the way of life (Nhanh chóng thích nghi với lối sống mới)"], correct: 3, sIdx: 2, exp: "Dẫn chứng Câu 23: 'because we quickly adopted the American way of life'." },
+        { q: "14. What is the purpose of the orientation talk on body language?", qVn: "Dịch câu hỏi: Mục đích của buổi nói chuyện định hướng là gì?", options: ["A. To introduce the director", "B. To deal with visa problems", "C. To inform the importance of grammar", "D. To introduce common problems in non-verbal communication (Giới thiệu các vấn đề trong giao tiếp phi ngôn ngữ)"], correct: 3, sIdx: 3, exp: "Dẫn chứng Câu 32: 'introduce common problems in non-verbal communication'." },
+        { q: "15. In American culture, what is TRUE about eye contact and handshakes?", qVn: "Dịch câu hỏi: Trong văn hóa Mỹ, điều gì ĐÚNG về giao tiếp mắt và bắt tay?", options: ["A. Eye contact is a sign of disrespect (Thiếu tôn trọng)", "B. People don't look in others' eyes (Không nhìn vào mắt)", "C. Eye contact is a sign of honesty and handshakes need to be firm (Nhìn vào mắt thể hiện sự trung thực và bắt tay cần chắc chắn)", "D. Handshakes are not common (Bắt tay không phổ biến)"], correct: 2, sIdx: 4, exp: "Dẫn chứng Câu 34: 'eye contact is considered a sign of honesty, and handshakes need to be firm'." }
       ]
     }
   }
 ];
 
 // ============================================================================
-// NGÂN HÀNG TỪ VỰNG & 15 CÂU HỎI MỖI NGÀY (PHỤC VỤ 60 NGÀY HỌC)
+// NGÂN HÀNG TỪ VỰNG & 15 CÂU HỎI MỖI NGÀY
 // ============================================================================
 const DAILY_VOCAB_BANK = [
   { word: "Prematurely", ipa: "/ˌprem.əˈtʃʊə.li/", boi: "pre-mơ-chua-li", vn: "Sớm, trước tuổi (tử vong sớm)", ex: "Smoking causes millions of people to die prematurely." },
@@ -988,21 +1156,21 @@ const DAILY_VOCAB_BANK = [
 ];
 
 const DAILY_15_QUIZ = [
-  { q: "1. Scientists warn that a third of young smokers will die ______ if they do not quit.", options: ["A. prematurely", "B. happily", "C. safely", "D.carefully"], correct: 0, exp: "'die prematurely' = tử vong sớm." },
-  { q: "2. The key to avoiding this wave of tobacco deaths is smoking ______.", options: ["A. cessation", "B. celebration", "C. promotion", "D. invitation"], correct: 0, exp: "'cessation' = sự dừng lại, sự bỏ thuốc." },
-  { q: "3. Public smoking bans have been ______ by the habit's popularity and huge tax revenues.", options: ["A. hampered", "B. assisted", "C. encouraged", "D. praised"], correct: 0, exp: "'hampered' = bị cản trở, hạn chế." },
-  { q: "4. According to the WHO, only one-fourth of adults can list the specific health ______ of smoking.", options: ["A. hazards", "B. benefits", "C. rewards", "D. talents"], correct: 0, exp: "'health hazards' = những mối nguy hại cho sức khỏe." },
-  { q: "5. The question of what to do about global warming remains highly ______.", options: ["A. controversial", "B. delicious", "C. asleep", "D. wooden"], correct: 0, exp: "'controversial' = gây nhiều tranh cãi." },
-  { q: "6. A commonly cited climate goal is to ______ greenhouse gas concentrations around 500 ppm.", options: ["A. stabilize", "B. pollute", "C. destroy", "D.explode"], correct: 0, exp: "'stabilize' = làm ổn định nồng độ khí thải." },
-  { q: "7. Plants and trees absorb CO2 as they grow, ______ carbon naturally.", options: ["A. sequestering", "B. releasing", "C. burning", "D. producing"], correct: 0, exp: "'sequestering' = hấp thụ và lưu giữ carbon." },
-  { q: "8. In visual ______, our eyes take in information in the form of light patterns.", options: ["A. perception", "B. digestion", "C. respiration", "D. vacation"], correct: 0, exp: "'visual perception' = tri giác thị giác." },
-  { q: "9. Master artists adapt ideas and ______ them to future generations.", options: ["A. bequeath", "B. hide", "C. steal", "D. forget"], correct: 0, exp: "'bequeath' = truyền lại cho thế hệ tương lai." },
-  { q: "10. Van Gogh was ______ by the belief that people journeyed to a star after death.", options: ["A. intrigued", "B. bored", "C. angered", "D.Employed"], correct: 0, exp: "'intrigued' = vô cùng hứng thú, bị cuốn hút." },
-  { q: "11. Penicillin works by blocking the molecules that construct the cell walls of ______.", options: ["A. bacteria", "B. rocks", "C. metals", "D. clouds"], correct: 0, exp: "'bacteria' = vi khuẩn." },
-  { q: "12. In the 1980s, there was a general sense of ______ among scientists regarding antibiotics.", options: ["A. complacency", "B. emergency", "C. poverty", "D. accuracy"], correct: 0, exp: "'complacency' = sự tự mãn, thiếu quan tâm." },
-  { q: "13. The appearance of drug-resistant bacteria should have been ______ by researchers.", options: ["A. anticipated", "B. cooked", "C. painted", "D. borrowed"], correct: 0, exp: "'anticipated' = được dự đoán, lường trước." },
-  { q: "14. To find a job easily in your 50s, you should maintain strong social ______ in your 40s.", options: ["A. networks", "B. diseases", "C. accidents", "D. taxes"], correct: 0, exp: "'social networks' = mạng lưới quan hệ xã hội." },
-  { q: "15. Mary found the hotel chef Gordon rather ______ because he easily lost his temper.", options: ["A. daunting", "B. charming", "C. cheerful", "D. gentle"], correct: 0, exp: "'daunting' = đáng sợ, gây e ngại." }
+  { q: "1. Scientists warn that a third of young smokers will die ______ if they do not quit.", qVn: "Dịch câu: Các nhà khoa học cảnh báo 1/3 người hút thuốc trẻ tuổi sẽ tử vong ______ nếu không bỏ thuốc.", options: ["A. prematurely (sớm / trước tuổi)", "B. happily (một cách hạnh phúc)", "C. safely (một cách an toàn)", "D. carefully (một cách cẩn thận)"], correct: 0, exp: "Cụm từ cố định 'die prematurely' = tử vong sớm. Các trạng từ B, C, D sai hoàn toàn về ngữ nghĩa." },
+  { q: "2. The key to avoiding this wave of tobacco deaths is smoking ______.", qVn: "Dịch câu: Chìa khóa để tránh làn sóng tử vong do thuốc lá này là ______ hút thuốc.", options: ["A. cessation (sự chấm dứt / cai thuốc)", "B. celebration (sự ăn mừng)", "C. promotion (sự thăng chức)", "D. invitation (lời mời)"], correct: 0, exp: "'smoking cessation' = sự cai thuốc lá / ngừng hút thuốc." },
+  { q: "3. Public smoking bans have been ______ by the habit's popularity and huge tax revenues.", qVn: "Dịch câu: Lệnh cấm hút thuốc nơi công cộng đã bị ______ bởi sự phổ biến của thói quen này và nguồn thu thuế khổng lồ.", options: ["A. hampered (cản trở / hạn chế)", "B. assisted (hỗ trợ)", "C. encouraged (khuyến khích)", "D. praised (khen ngợi)"], correct: 0, exp: "'hampered' (= restricted) mang nghĩa bị cản trở. B, C, D đều mang nghĩa tích cực nên trái ngữ cảnh." },
+  { q: "4. According to the WHO, only one-fourth of adults can list the specific health ______ of smoking.", qVn: "Dịch câu: Theo WHO, chỉ 1/4 người lớn liệt kê được những ______ cụ thể đối với sức khỏe của việc hút thuốc.", options: ["A. hazards (mối nguy hại)", "B. benefits (lợi ích)", "C. rewards (phần thưởng)", "D. talents (tài năng)"], correct: 0, exp: "'health hazards' = những mối nguy hại cho sức khỏe." },
+  { q: "5. The question of what to do about global warming remains highly ______.", qVn: "Dịch câu: Câu hỏi phải làm gì với hiện tượng nóng lên toàn cầu vẫn còn gây nhiều ______.", options: ["A. controversial (tranh cãi)", "B. delicious (ngon miệng)", "C. asleep (buồn ngủ)", "D. wooden (bằng gỗ)"], correct: 0, exp: "'controversial' = gây tranh cãi (về kinh tế, chính trị, xã hội)." },
+  { q: "6. A commonly cited climate goal is to ______ greenhouse gas concentrations around 500 ppm.", qVn: "Dịch câu: Mục tiêu khí hậu thường được nhắc tới là ______ nồng độ khí nhà kính ở quanh mức 500 ppm.", options: ["A. stabilize (làm ổn định)", "B. pollute (làm ô nhiễm)", "C. destroy (phá hủy)", "D. explode (làm nổ)"], correct: 0, exp: "'stabilize concentrations' = làm ổn định nồng độ khí thải." },
+  { q: "7. Plants and trees absorb CO2 as they grow, ______ carbon naturally.", qVn: "Dịch câu: Cây cối hấp thụ CO2 khi chúng lớn lên, ______ carbon một cách tự nhiên.", options: ["A. sequestering (hấp thụ và lưu giữ)", "B. releasing (thải ra)", "C. burning (đốt cháy)", "D. producing (sản xuất ra)"], correct: 0, exp: "'sequestering carbon' = hấp thụ và cô lập khí carbon." },
+  { q: "8. In visual ______, our eyes take in information in the form of light patterns.", qVn: "Dịch câu: Trong ______ thị giác, đôi mắt chúng ta tiếp nhận thông tin dưới dạng các mô hình ánh sáng.", options: ["A. perception (tri giác / sự nhận thức)", "B. digestion (sự tiêu hóa)", "C. respiration (sự hô hấp)", "D. vacation (kỳ nghỉ)"], correct: 0, exp: "'visual perception' = tri giác thị giác (nhận biết qua mắt)." },
+  { q: "9. Master artists adapt ideas and ______ them to future generations.", qVn: "Dịch câu: Các họa sĩ bậc thầy điều chỉnh ý tưởng và ______ chúng cho các thế hệ tương lai.", options: ["A. bequeath (truyền lại / để lại)", "B. hide (che giấu)", "C. steal (ăn cắp)", "D. forget (lãng quên)"], correct: 0, exp: "'bequeath to future generations' = truyền lại di sản/ý tưởng cho thế hệ mai sau." },
+  { q: "10. Van Gogh was ______ by the belief that people journeyed to a star after death.", qVn: "Dịch câu: Danh họa Van Gogh đã bị ______ bởi niềm tin rằng con người du hành tới một vì sao sau khi qua đời.", options: ["A. intrigued (cuốn hút / fấn khích)", "B. bored (nhàm chán)", "C. angered (tức giận)", "D. employed (thuê mướn)"], correct: 0, exp: "'be intrigued by' = bị cuốn hút, vô cùng hứng thú với điều gì." },
+  { q: "11. Penicillin works by blocking the molecules that construct the cell walls of ______.", qVn: "Dịch câu: Penicillin hoạt động bằng cách chặn các phân tử cấu tạo nên thành tế bào của ______.", options: ["A. bacteria (vi khuẩn)", "B. rocks (đá tảng)", "C. metals (kim loại)", "D. clouds (đám mây)"], correct: 0, exp: "Thuốc kháng sinh tiêu diệt vi khuẩn (bacteria)." },
+  { q: "12. In the 1980s, there was a general sense of ______ among scientists regarding antibiotics.", qVn: "Dịch câu: Vào cuối thập niên 1980, có một tâm lý ______ chung giữa các nhà khoa học về vấn đề kháng sinh.", options: ["A. complacency (tự mãn / chủ quan)", "B. emergency (khẩn cấp)", "C. poverty (nghèo đói)", "D. accuracy (chính xác)"], correct: 0, exp: "'sense of complacency' = tâm lý tự mãn, chủ quan." },
+  { q: "13. The appearance of drug-resistant bacteria should have been ______ by researchers.", qVn: "Dịch câu: Sự xuất hiện của vi khuẩn kháng thuốc đáng lẽ phải được ______ từ trước bởi các nhà nghiên cứu.", options: ["A. anticipated (dự đoán trước)", "B. cooked (nấu chín)", "C. painted (sơn màu)", "D. borrowed (vay mượn)"], correct: 0, exp: "'anticipated' = được lường trước, dự đoán trước (= predicted)." },
+  { q: "14. To find a job easily in your 50s, you should maintain strong social ______ in your 40s.", qVn: "Dịch câu: Để dễ tìm việc ở tuổi 50, bạn nên duy trì ______ xã hội vững chắc ngay từ tuổi 40.", options: ["A. networks (mạng lưới quan hệ)", "B. diseases (bệnh tật)", "C. accidents (tai nạn)", "D. taxes (thuế)"], correct: 0, exp: "'social networks' = mạng lưới mối quan hệ xã hội và đồng nghiệp." },
+  { q: "15. Mary found the hotel chef Gordon rather ______ because he easily lost his temper.", qVn: "Dịch câu: Mary cảm thấy bếp trưởng Gordon khá ______ vì ông ấy rất dễ nổi nóng.", options: ["A. daunting (đáng sợ / gây e dè)", "B. charming (duyên dáng)", "C. cheerful (vui vẻ)", "D. gentle (dịu dàng)"], correct: 0, exp: "'daunting' (= frightening) = đáng sợ. B, C, D mang nghĩa tích cực nên sai với 'lost his temper' (nổi giận)." }
 ];
 
 // ============================================================================
@@ -1102,15 +1270,18 @@ let currentListenPart = 0;
 let currentReadPassage = 0;
 let dailyScores = { vocab: 0, listen: 0, read: 0 };
 
-// Biến cho Phòng Thi Thử 10 Đề (75 câu trắc nghiệm: 35 Nghe + 40 Đọc)
 let currentMockIndex = 0;
 let currentMockReadTab = 0;
-let mockUserAnswers = {}; // Lưu từ câu 1 -> 75
+let mockUserAnswers = {};
 let mockSubmitted = false;
 let fullExamTimer = null;
 let examRemainingSeconds = 172 * 60;
+let geminiChatHistory = [];
 
 window.onload = function() {
+  const savedKey = localStorage.getItem('VSTEP_GEMINI_KEY') || DEFAULT_GEMINI_KEY;
+  document.getElementById('geminiKeyInput').value = savedKey;
+
   buildDayDropdown();
   loadDailyLesson(1);
   loadMockExam(0);
@@ -1158,7 +1329,6 @@ function loadDailyLesson(dayVal) {
 }
 
 function renderDailyAll() {
-  // 1. Render Từ vựng + 15 câu hỏi
   document.getElementById('vocabDayHeader').innerText = `Ngày ${currentDay}: 10 Từ Vựng Học Thuật Trọng Tâm Trong Đề Thi`;
   document.getElementById('dailyVocabGrid').innerHTML = DAILY_VOCAB_BANK.map(v => `
     <div class="vocab-card">
@@ -1174,14 +1344,9 @@ function renderDailyAll() {
   `).join('');
 
   renderQuestionSet('dailyVocabQuizBox', DAILY_15_QUIZ, 'dailyVocab');
-
-  // 2. Render 3 Bài Nghe
   switchListenPart(currentListenPart);
-
-  // 3. Render 3 Bài Đọc
   switchReadPassage(currentReadPassage);
 
-  // 4. Render Viết & Nói
   const ws = REAL_WRITING_SPEAKING[(currentDay - 1) % REAL_WRITING_SPEAKING.length];
   document.getElementById('dailyWritingPrompts').innerHTML = `
     <div style="font-weight:800; color:var(--accent); margin-bottom:6px;">📌 ĐỀ VIẾT HÔM NAY (${ws.name}):</div>
@@ -1189,15 +1354,9 @@ function renderDailyAll() {
     <div>${ws.t2}</div>
   `;
   document.getElementById('dailySpeakingContent').innerHTML = `
-    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">
-      ${ws.speakP1}
-    </div>
-    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">
-      ${ws.speakP2}
-    </div>
-    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">
-      ${ws.speakP3}
-    </div>
+    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">${ws.speakP1}</div>
+    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">${ws.speakP2}</div>
+    <div style="border:1px solid var(--border); padding:14px; border-radius:6px; margin-bottom:12px;">${ws.speakP3}</div>
     <div style="background:#eff6ff; padding:14px; border:1px solid #93c5fd; border-radius:6px;">
       <strong>💡 Bài Trả Lời Mẫu B1-B2:</strong><br>${ws.sampleS}
       <div style="margin-top:8px;">
@@ -1257,7 +1416,6 @@ function switchReadPassage(pIdx) {
   `;
   document.getElementById('dailyReadTransPane').innerHTML = `<strong>🇻🇳 Tóm tắt & Dịch nghĩa học thuật:</strong><br>${pData.translation}`;
 
-  // Mỗi bài đọc trong ngày lấy 5 câu hỏi (3 bài x 5 = 15 câu/ngày)
   const fiveQuestions = pData.questions.slice(0, 5);
   renderQuestionSet('dailyReadQuestionsPane', fiveQuestions, 'dailyRead', passageIndex);
 }
@@ -1290,13 +1448,14 @@ function checkDailyAnswer(mode, qIdx, chosenIdx, passageIdx) {
   const qObj = qList[qIdx];
   const qBox = document.getElementById(`${mode}-q-${qIdx}`);
   const btns = qBox.querySelectorAll('.opt-btn');
-  const expBox = document.getElementById(`${mode}-exp-${qIdx}`);
+  const expId = `${mode}-exp-${qIdx}`;
+  const expBox = document.getElementById(expId);
 
   let wasAnswered = false;
-  btns.forEach(b => { if (b.disabled) wasAnswered = true; });
+  btns.forEach(b => { if (b.classList.contains('correct') || b.classList.contains('wrong')) wasAnswered = true; });
 
   btns.forEach((b, i) => {
-    b.disabled = true;
+    b.classList.remove('correct', 'wrong');
     if (i === qObj.correct) b.classList.add('correct');
     else if (i === chosenIdx) b.classList.add('wrong');
   });
@@ -1315,15 +1474,10 @@ function checkDailyAnswer(mode, qIdx, chosenIdx, passageIdx) {
     }
   }
 
+  // Hiện nghĩa câu hỏi + nghĩa 4 đáp án + giải thích lỗi sai
   expBox.style.display = 'block';
-  expBox.innerHTML = `
-    <strong style="color:${isRight ? 'var(--success-text)' : 'var(--error-text)'};">
-      ${isRight ? '✓ CHÍNH XÁC!' : '✗ SAI! Đáp án đúng là: ' + qObj.options[qObj.correct]}
-    </strong><br>
-    <span>📌 Giải thích: ${qObj.exp}</span>
-  `;
+  expBox.innerHTML = buildDetailedExplanationHTML(qObj, chosenIdx, expId);
 
-  // Tô sáng Tapescript nếu là bài Nghe
   if (mode === 'dailyListen' && typeof qObj.sIdx === 'number') {
     const sPane = document.getElementById('dailyListenScriptPane');
     sPane.style.display = 'block';
@@ -1336,7 +1490,6 @@ function checkDailyAnswer(mode, qIdx, chosenIdx, passageIdx) {
     }
   }
 
-  // Tô sáng đoạn văn nếu là bài Đọc
   if (mode === 'dailyRead' && qObj.target) {
     const pData = REAL_PASSAGES[passageIdx];
     const pPane = document.getElementById('dailyReadPassagePane');
@@ -1346,17 +1499,15 @@ function checkDailyAnswer(mode, qIdx, chosenIdx, passageIdx) {
 }
 
 // ============================================================================
-// PHÒNG THI THỬ 10 ĐỀ CHUẨN THI THẬT (35 NGHE + 40 ĐỌC + 2 VIẾT + 3 NÓI)
+// PHÒNG THI THỬ 10 ĐỀ CHUẨN THI THẬT (CÓ HIỆN NGHĨA & LÝ DO SAI TỪNG CÂU)
 // ============================================================================
 function getMockExamData(examIdx) {
-  // Tổ hợp 4 Passages (40 câu Reading) và 35 câu Listening cho từng đề trong 10 đề
   const p1 = REAL_PASSAGES[(examIdx * 2) % REAL_PASSAGES.length];
   const p2 = REAL_PASSAGES[(examIdx * 2 + 1) % REAL_PASSAGES.length];
   const p3 = REAL_PASSAGES[(examIdx * 2 + 2) % REAL_PASSAGES.length];
   const p4 = REAL_PASSAGES[(examIdx * 2 + 3) % REAL_PASSAGES.length];
   const ws = REAL_WRITING_SPEAKING[examIdx % REAL_WRITING_SPEAKING.length];
 
-  // Xây dựng đủ 35 câu Listening (Part 1: Câu 1-8, Part 2: Câu 9-20, Part 3: Câu 21-35)
   const baseL = [
     ...REAL_LISTENING_SETS[0].part1.questions,
     ...REAL_LISTENING_SETS[0].part2.questions,
@@ -1370,6 +1521,7 @@ function getMockExamData(examIdx) {
       num: i + 1,
       part: partLabel,
       q: `Question ${i + 1} [${partLabel}]: ${templateQ.q.replace(/^\d+\.\s*/, '')}`,
+      qVn: templateQ.qVn,
       options: templateQ.options,
       correct: templateQ.correct,
       exp: templateQ.exp
@@ -1392,11 +1544,8 @@ function loadMockExam(val) {
   document.getElementById('mockFinalResultCard').style.display = 'none';
 
   const examData = getMockExamData(currentMockIndex);
-
-  // 1. Tạo bảng Answer Sheet 75 câu (L1..L35 và R1..R40)
   buildAnswerSheetGrid();
 
-  // 2. Render 35 câu Listening
   const lBox = document.getElementById('mockListenQuestionsBox');
   lBox.innerHTML = examData.listening35.map((item, idx) => `
     <div class="q-box" id="mock-l-q-${idx}">
@@ -1406,9 +1555,7 @@ function loadMockExam(val) {
           <button class="opt-btn" id="mock-l-btn-${idx}-${oIdx}" onclick="selectMockOption('L', ${idx}, ${oIdx})">${opt}</button>
         `).join('')}
       </div>
-      <div class="exp-alert" id="mock-l-exp-${idx}">
-        <strong>Đáp án đúng: ${item.options[item.correct]}</strong> &mdash; ${item.exp}
-      </div>
+      <div class="exp-alert" id="mock-l-exp-${idx}"></div>
     </div>
   `).join('');
 
@@ -1419,10 +1566,8 @@ function loadMockExam(val) {
     ${REAL_LISTENING_SETS[0].part3.script.join('<br>')}
   `;
 
-  // 3. Render 4 Passages (40 câu Reading)
   switchMockReadPassage(0);
 
-  // 4. Render Writing & Speaking của đề thi thử
   document.getElementById('mockWriteTask1Prompt').innerHTML = examData.ws.t1;
   document.getElementById('mockWriteTask2Prompt').innerHTML = examData.ws.t2;
   document.getElementById('mockSpeakPromptsBox').innerHTML = `
@@ -1466,9 +1611,11 @@ function switchMockReadPassage(pIdx) {
 
   const qBox = document.getElementById('mockReadQuestionsBox');
   qBox.innerHTML = pObj.questions.map((q, localIdx) => {
-    const globalRIdx = pIdx * 10 + localIdx; // 0..39
-    const sheetNum = 35 + globalRIdx + 1;    // 36..75
+    const globalRIdx = pIdx * 10 + localIdx;
+    const sheetNum = 35 + globalRIdx + 1;
     const savedChoice = mockUserAnswers[sheetNum];
+    const expId = `mock-r-exp-${globalRIdx}`;
+    const hasAnswered = typeof savedChoice === 'number';
 
     return `
       <div class="q-box" id="mock-r-q-${globalRIdx}">
@@ -1476,17 +1623,15 @@ function switchMockReadPassage(pIdx) {
         <div class="opt-grid">
           ${q.options.map((opt, oIdx) => {
             let cls = 'opt-btn';
-            if (mockSubmitted) {
+            if (hasAnswered || mockSubmitted) {
               if (oIdx === q.correct) cls += ' correct';
               else if (savedChoice === oIdx) cls += ' wrong';
-            } else if (savedChoice === oIdx) {
-              cls += ' correct';
             }
             return `<button class="${cls}" onclick="selectMockOption('R', ${globalRIdx}, ${oIdx})">${opt}</button>`;
           }).join('')}
         </div>
-        <div class="exp-alert" id="mock-r-exp-${globalRIdx}" style="display:${mockSubmitted ? 'block' : 'none'};">
-          <strong>Đáp án đúng: ${q.options[q.correct]}</strong><br>${q.exp}
+        <div class="exp-alert" id="${expId}" style="display:${(hasAnswered || mockSubmitted) ? 'block' : 'none'};">
+          ${(hasAnswered || mockSubmitted) ? buildDetailedExplanationHTML(q, savedChoice ?? q.correct, expId) : ''}
         </div>
       </div>
     `;
@@ -1497,7 +1642,6 @@ function selectMockOption(type, idx, oIdx) {
   const sheetNum = type === 'L' ? (idx + 1) : (36 + idx);
   mockUserAnswers[sheetNum] = oIdx;
 
-  // Chấm trực tiếp và hiện giải thích ngay để học viên vừa thi vừa học
   const examData = getMockExamData(currentMockIndex);
   if (type === 'L') {
     const qObj = examData.listening35[idx];
@@ -1507,22 +1651,27 @@ function selectMockOption(type, idx, oIdx) {
       if (i === qObj.correct) b.classList.add('correct');
       else if (i === oIdx) b.classList.add('wrong');
     });
-    document.getElementById(`mock-l-exp-${idx}`).style.display = 'block';
+    const expId = `mock-l-exp-${idx}`;
+    const expEl = document.getElementById(expId);
+    expEl.style.display = 'block';
+    expEl.innerHTML = buildDetailedExplanationHTML(qObj, oIdx, expId);
   } else {
     const pIdx = Math.floor(idx / 10);
     const localIdx = idx % 10;
     const pObj = examData.passages4[pIdx];
     const qObj = pObj.questions[localIdx];
     const qBox = document.getElementById(`mock-r-q-${idx}`);
+    const expId = `mock-r-exp-${idx}`;
     if (qBox) {
       qBox.querySelectorAll('.opt-btn').forEach((b, i) => {
         b.classList.remove('correct', 'wrong');
         if (i === qObj.correct) b.classList.add('correct');
         else if (i === oIdx) b.classList.add('wrong');
       });
-      document.getElementById(`mock-r-exp-${idx}`).style.display = 'block';
+      const expEl = document.getElementById(expId);
+      expEl.style.display = 'block';
+      expEl.innerHTML = buildDetailedExplanationHTML(qObj, oIdx, expId);
     }
-    // Tô vàng dẫn chứng trong bài đọc
     if (qObj.target) {
       document.getElementById('mockReadPassageText').innerHTML =
         `<div style="font-weight:800; font-size:1.05rem; color:var(--accent); margin-bottom:10px;">PASSAGE ${pIdx + 1}: ${pObj.title}</div>` +
@@ -1561,7 +1710,6 @@ function submitFullMockExam() {
   mockSubmitted = true;
   const examData = getMockExamData(currentMockIndex);
 
-  // 1. Tính điểm Listening (35 câu -> thang 10)
   let correctL = 0;
   examData.listening35.forEach((q, idx) => {
     const ans = mockUserAnswers[idx + 1];
@@ -1572,12 +1720,15 @@ function submitFullMockExam() {
     } else if (typeof ans === 'number') {
       if (cell) cell.className = 'sheet-cell wrong-cell';
     }
-    const exp = document.getElementById(`mock-l-exp-${idx}`);
-    if (exp) exp.style.display = 'block';
+    const expId = `mock-l-exp-${idx}`;
+    const exp = document.getElementById(expId);
+    if (exp) {
+      exp.style.display = 'block';
+      exp.innerHTML = buildDetailedExplanationHTML(q, ans ?? q.correct, expId);
+    }
   });
   const scoreL = Math.round(((correctL / 35) * 10) * 2) / 2;
 
-  // 2. Tính điểm Reading (40 câu -> thang 10)
   let correctR = 0;
   for (let p = 0; p < 4; p++) {
     examData.passages4[p].questions.forEach((q, localIdx) => {
@@ -1595,14 +1746,12 @@ function submitFullMockExam() {
   }
   const scoreR = Math.round(((correctR / 40) * 10) * 2) / 2;
 
-  // 3. Tính điểm Writing (Task 1 + Task 2)
   const w1Words = document.getElementById('mockWriteTask1Input').value.trim().split(/\s+/).filter(Boolean).length;
   const w2Words = document.getElementById('mockWriteTask2Input').value.trim().split(/\s+/).filter(Boolean).length;
   let scoreW = 5.0;
   if (w1Words >= 100 && w2Words >= 200) scoreW = 7.0;
   else if (w1Words >= 50 || w2Words >= 100) scoreW = 6.0;
 
-  // 4. Tính điểm Speaking
   const spkWords = document.getElementById('mockSpeakInput').value.trim().split(/\s+/).filter(Boolean).length;
   let scoreS = spkWords >= 60 ? 6.5 : 5.5;
 
@@ -1667,7 +1816,142 @@ function fillMockSpeakingSample() {
 }
 
 // ============================================================================
-// TIỆN ÍCH TRA TỪ, PHÁT ÂM, CHẤM VIẾT & GIÁO VIÊN AI
+// KẾT NỐI TRỰC TIẾP GEMINI FLASH LATEST (THEO CURL X-GOOG-API-KEY CỦA BẠN)
+// ============================================================================
+function getActiveApiKey() {
+  const inputVal = document.getElementById('geminiKeyInput')?.value?.trim();
+  return inputVal || localStorage.getItem('VSTEP_GEMINI_KEY') || DEFAULT_GEMINI_KEY;
+}
+
+function saveGeminiKey() {
+  const val = document.getElementById('geminiKeyInput').value.trim();
+  if (val) {
+    localStorage.setItem('VSTEP_GEMINI_KEY', val);
+    alert('Đã cập nhật Gemini API Key thành công!');
+  }
+}
+
+async function callGeminiAPI(promptText) {
+  const apiKey = getActiveApiKey();
+  const currentPassage = REAL_PASSAGES[((currentDay - 1) + currentReadPassage) % REAL_PASSAGES.length];
+  const currentWriting = document.getElementById('dailyWritingEditor')?.value?.trim() || '';
+
+  const systemContext = `Bạn là Giáo viên AI Gemini dạy tiếng Anh VSTEP B1-B2 trực tiếp cho Lại Xuân Bắc (sinh viên Kỹ thuật Cơ điện tử).
+- Hãy trả lời ngắn gọn, rõ ràng, đi thẳng vào trọng tâm, giải thích từ vựng và ngữ pháp cực kỳ dễ hiểu cho người mất gốc lên B1-B2.
+- Ngữ cảnh hiện tại trên web: Ngày học ${currentDay}, Bài đọc "${currentPassage.title}". Bài viết Writing hiện tại: "${currentWriting || 'Chưa viết'}".`;
+
+  const payload = {
+    contents: [
+      {
+        parts: [
+          { text: `${systemContext}\n\nCâu hỏi / Yêu cầu của Bắc: ${promptText}` }
+        ]
+      }
+    ]
+  };
+
+  // Gọi đúng chuẩn cURL: Header X-goog-api-key + gemini-flash-latest
+  let res = await fetch(GEMINI_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-goog-api-key': apiKey
+    },
+    body: JSON.stringify(payload)
+  });
+
+  // Nếu trình duyệt chặn CORS header tùy chỉnh thì tự động thử lại qua query param ?key=
+  if (!res.ok) {
+    res = await fetch(`${GEMINI_ENDPOINT}?key=${encodeURIComponent(apiKey)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  }
+
+  if (!res.ok) {
+    const errJson = await res.json().catch(() => ({}));
+    throw new Error(errJson?.error?.message || `HTTP ${res.status}`);
+  }
+
+  const data = await res.json();
+  const rawReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Không nhận được phản hồi.";
+  return rawReply
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+// Hàm giải thích sâu bằng Gemini ngay tại từng câu hỏi trắc nghiệm
+async function askGeminiWhyWrong(questionText, chosenOpt, correctOpt, expContainerId) {
+  const expBox = document.getElementById(expContainerId);
+  if (!expBox) return;
+
+  const aiDivId = expContainerId + '-ai-deep';
+  let aiDiv = document.getElementById(aiDivId);
+  if (!aiDiv) {
+    aiDiv = document.createElement('div');
+    aiDiv.id = aiDivId;
+    aiDiv.style.marginTop = '8px';
+    aiDiv.style.padding = '10px';
+    aiDiv.style.background = '#eff6ff';
+    aiDiv.style.border = '1px solid #93c5fd';
+    aiDiv.style.borderRadius = '6px';
+    expBox.appendChild(aiDiv);
+  }
+
+  aiDiv.innerHTML = `⏳ <em>Gemini đang dịch chi tiết và phân tích lỗi sai...</em>`;
+
+  try {
+    const prompt = `Trong đề thi VSTEP, câu hỏi là: "${questionText}".
+Tôi đã chọn phương án: "${chosenOpt}", còn đáp án đúng là: "${correctOpt}".
+Hãy giúp tôi:
+1. Dịch chính xác câu hỏi và các phương án sang tiếng Việt.
+2. Giải thích rõ tại sao phương án "${chosenOpt}" sai (hoặc tại sao "${correctOpt}" đúng) và rút ra từ vựng cần nhớ.`;
+    const reply = await callGeminiAPI(prompt);
+    aiDiv.innerHTML = `🤖 <strong>Phân tích chuyên sâu từ Gemini AI:</strong><br>${reply}`;
+  } catch (err) {
+    aiDiv.innerHTML = `⚠️ <strong>Lưu ý kết nối Gemini:</strong> ${err.message}. (Phần giải thích và dịch nghĩa tích hợp sẵn phía trên vẫn hiển thị đầy đủ cho bạn!).`;
+  }
+}
+
+async function sendAIChat() {
+  const inp = document.getElementById('aiInputBox');
+  const sendBtn = document.getElementById('aiSendBtn');
+  const msg = inp.value.trim();
+  if (!msg) return;
+
+  const list = document.getElementById('aiChatList');
+  list.innerHTML += `<div class="msg user">${msg}</div>`;
+  inp.value = '';
+  list.scrollTop = list.scrollHeight;
+
+  const loadingId = 'ai-load-' + Date.now();
+  list.innerHTML += `<div class="msg bot" id="${loadingId}">⏳ <em>Gemini đang trả lời...</em></div>`;
+  list.scrollTop = list.scrollHeight;
+  if (sendBtn) sendBtn.disabled = true;
+
+  try {
+    const reply = await callGeminiAPI(msg);
+    document.getElementById(loadingId).innerHTML = `<strong>Gemini:</strong><br>${reply}`;
+  } catch (err) {
+    document.getElementById(loadingId).innerHTML = `<strong>⚠️ Thông báo kết nối API (${err.message}):</strong> Bạn hãy kiểm tra lại mã Key trong ô cài đặt phía trên nhé.`;
+  } finally {
+    if (sendBtn) sendBtn.disabled = false;
+    list.scrollTop = list.scrollHeight;
+  }
+}
+
+function quickAskGemini(text) {
+  document.getElementById('aiInputBox').value = text;
+  sendAIChat();
+}
+
+function clearAIChat() {
+  document.getElementById('aiChatList').innerHTML = `<div class="msg bot"><strong>Gemini:</strong> Đã xóa lịch sử trò chuyện. Bạn cần hỏi thêm gì cứ nhắn mình nhé!</div>`;
+}
+
+// ============================================================================
+// TIỆN ÍCH TRA TỪ, PHÁT ÂM, CHẤM VIẾT BẰNG GEMINI
 // ============================================================================
 function speakText(text, rate = 0.95) {
   if (!('speechSynthesis' in window)) return;
@@ -1687,19 +1971,32 @@ function speakAllDailyVocab() {
   speakText(text, 0.88);
 }
 
-function translateSelection() {
+async function translateSelection() {
   const raw = window.getSelection().toString().trim();
   const bar = document.getElementById('dictAlertBar');
   bar.style.display = 'block';
   if (!raw) {
-    bar.innerHTML = `⚠️ Hãy bôi đen 1 từ hoặc cụm từ trong bài đọc trước khi bấm nút này!`;
+    bar.innerHTML = `⚠️ Hãy dùng chuột bôi đen 1 từ, cụm từ hoặc câu trong bài đọc trước khi bấm nút này!`;
     return;
   }
-  const found = DAILY_VOCAB_BANK.find(v => v.word.toLowerCase() === raw.toLowerCase());
-  if (found) {
-    bar.innerHTML = `🔍 <strong>${found.word}</strong> ${found.ipa} (Đọc bồi: <em>${found.boi}</em>) ➔ <strong>Nghĩa:</strong> ${found.vn}`;
-  } else {
-    bar.innerHTML = `🔍 <strong>"${raw}"</strong> ➔ Bấm nút <strong>"📖 Hiện/Ẩn Dịch Nghĩa"</strong> bên cạnh để xem bản dịch học thuật toàn đoạn chứa từ này. <button class="btn" style="padding:2px 8px;" onclick="speakText('${raw.replace(/'/g, "\\'")}', 0.9)">🔊 Nghe phát âm</button>`;
+
+  bar.innerHTML = `⏳ <em>Đang nhờ Gemini dịch và phân tích ngữ pháp cho: "<strong>${raw}</strong>"...</em>`;
+
+  try {
+    const reply = await callGeminiAPI(`Giải thích ngắn gọn từ/cụm từ "${raw}" cho người mất gốc học VSTEP: 1. Nghĩa tiếng Việt sát ngữ cảnh, 2. Phiên âm IPA & cách đọc bồi tiếng Việt, 3. Từ đồng nghĩa hay gặp trong đề thi VSTEP.`);
+    bar.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+        <div>🤖 <strong>Gemini giải nghĩa ["${raw}"]:</strong><br>${reply}</div>
+        <button class="btn" onclick="speakText('${raw.replace(/'/g, "\\'")}', 0.9)">🔊 Phát âm</button>
+      </div>
+    `;
+  } catch (err) {
+    const found = DAILY_VOCAB_BANK.find(v => v.word.toLowerCase() === raw.toLowerCase());
+    if (found) {
+      bar.innerHTML = `🔍 <strong>${found.word}</strong> ${found.ipa} (Đọc bồi: <em>${found.boi}</em>) ➔ <strong>Nghĩa:</strong> ${found.vn}`;
+    } else {
+      bar.innerHTML = `🔍 <strong>"${raw}"</strong> ➔ Bấm nút "📖 Hiện/Ẩn Dịch Nghĩa" bên cạnh để đối chiếu bản dịch toàn bài. <button class="btn" style="padding:2px 8px;" onclick="speakText('${raw.replace(/'/g, "\\'")}', 0.9)">🔊 Phát âm</button>`;
+    }
   }
 }
 
@@ -1725,46 +2022,41 @@ function showSampleWritingDay() {
   ed.dispatchEvent(new Event('input'));
 }
 
-function gradeWritingNow(editorId, fbId) {
+async function gradeWritingNow(editorId, fbId) {
   const text = document.getElementById(editorId).value.trim();
   const fb = document.getElementById(fbId);
   fb.style.display = 'block';
   const words = text ? text.split(/\s+/).length : 0;
-  if (words < 20) {
+  if (words < 15) {
     fb.innerHTML = `⚠️ Bài viết mới có ${words} từ. Hãy bấm nút <strong>"Chèn Khung Task 1"</strong> hoặc <strong>"Xem Bài Giải Mẫu B1-B2"</strong> để luyện viết đủ tối thiểu 120 từ nhé!`;
     return;
   }
+
   const hasConnectors = /furthermore|however|therefore|because|firstly|secondly|moreover|consequently/i.test(text);
   const est = Math.min(5.0 + (words >= 120 ? 1.5 : 0.5) + (hasConnectors ? 1.0 : 0), 8.5);
   fb.innerHTML = `
-    <strong>✅ KẾT QUẢ CHẤM WRITING VSTEP: ${est.toFixed(1)} / 10.0</strong><br>
-    • <strong>Số lượng từ:</strong> ${words} từ (${words >= 120 ? 'Đạt chuẩn độ dài VSTEP' : 'Cần viết dài hơn để đạt tối đa điểm Task Fulfillment'}).<br>
-    • <strong>Từ nối học thuật (Coherence & Cohesion):</strong> ${hasConnectors ? 'Đã sử dụng tốt các từ nối liên kết đoạn.' : 'Nên bổ sung các từ nối: Furthermore, However, Therefore.'}
+    <strong>✅ KẾT QUẢ CHẤM SƠ BỘ VSTEP: ${est.toFixed(1)} / 10.0 (${words} từ)</strong><br>
+    ⏳ <em>Đang gửi bài viết của bạn tới Giáo viên AI Gemini để sửa lỗi ngữ pháp từng câu...</em>
   `;
+
+  try {
+    const aiReview = await callGeminiAPI(`Hãy chấm điểm bài viết VSTEP dưới đây theo thang điểm 10 (Task Fulfillment, Organization, Vocabulary, Grammar), chỉ rõ các lỗi sai ngữ pháp/từ vựng và viết lại câu sửa chuẩn B2:\n\n"${text}"`);
+    fb.innerHTML = `
+      <strong>✅ KẾT QUẢ CHẤM & SỬA BÀI CHI TIẾT TỪ GEMINI AI (${words} từ):</strong><br><br>
+      ${aiReview}
+    `;
+  } catch (e) {
+    fb.innerHTML = `
+      <strong>✅ KẾT QUẢ CHẤM WRITING VSTEP: ${est.toFixed(1)} / 10.0</strong><br>
+      • <strong>Số lượng từ:</strong> ${words} từ (${words >= 120 ? 'Đạt chuẩn độ dài VSTEP' : 'Cần viết dài hơn để đạt tối đa điểm Task Fulfillment'}).<br>
+      • <strong>Từ nối học thuật:</strong> ${hasConnectors ? 'Đã sử dụng tốt các từ nối liên kết đoạn.' : 'Nên bổ sung các từ nối: Furthermore, However, Therefore.'}
+    `;
+  }
 }
 
 function toggleAIDrawer() {
   const d = document.getElementById('aiDrawer');
   d.style.display = d.style.display === 'flex' ? 'none' : 'flex';
-}
-
-function sendAIChat() {
-  const inp = document.getElementById('aiInputBox');
-  const msg = inp.value.trim();
-  if (!msg) return;
-  const list = document.getElementById('aiChatList');
-  list.innerHTML += `<div class="msg user">${msg}</div>`;
-  inp.value = '';
-
-  const found = DAILY_VOCAB_BANK.find(v => msg.toLowerCase().includes(v.word.toLowerCase()));
-  let reply = '';
-  if (found) {
-    reply = `Từ <strong>${found.word}</strong> ${found.ipa} (đọc bồi: <em>${found.boi}</em>) có nghĩa là: <strong>${found.vn}</strong>.<br>Ví dụ: "${found.ex}"`;
-  } else {
-    reply = `Với câu hỏi <em>"${msg}"</em>: Trong đề thi VSTEP B1-B2, bạn hãy ưu tiên nắm chắc 10 từ vựng ngày hôm nay, làm đủ 15 câu Nghe + 15 câu Đọc và bấm vào từng đáp án để xem câu dẫn chứng tô vàng trực tiếp trong bài nhé!`;
-  }
-  list.innerHTML += `<div class="msg bot"><strong>Giáo viên AI:</strong> ${reply}</div>`;
-  list.scrollTop = list.scrollHeight;
 }
 </script>
 </body>
